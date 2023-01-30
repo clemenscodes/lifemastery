@@ -74,12 +74,12 @@ Then add the following cacheable operations to tasksRunnerOptions.default.option
 ## Running
 
 ```sh
-nx start web-landing  # run the landing page app
-nx start web-finance # run the finance solito app
+nx start web-landing     # run the landing page app
+nx start web-finance     # run the finance solito app
 nx start mobile-finance  # run the native app
 nx start desktop-finance # run the demo app natively using tauri 
-nx start api          # run the rust axum api
-nx start docs         # run the docusaurus app
+nx start api             # run the rust axum api
+nx start docs            # run the docusaurus app
 ```
 
 ## Developing
@@ -122,7 +122,7 @@ yarn debug 8 # test only failed targets
 ### Storybook
 
 ```sh
-nx start sb-web-finance    # run storybook for demo app
+nx start sb-web-finance # run storybook for demo app
 nx start sb-web-landing # run storybook for landing page app
 nx start sb-web-shared  # run storybook for shared components
 nx start sb-mobile      # run storybook on mobile for all components
@@ -132,7 +132,7 @@ nx start sb-mobile      # run storybook on mobile for all components
 
 ```sh
 nx e2e e2e-web-finance    # run cypress for demo app
-nx e2e e2e-web-landing # run cypress for landing page app
+nx e2e e2e-web-landing    # run cypress for landing page app
 nx e2e e2e-mobile-finance # run detox for mobile (needs configuration)
 ```
 
