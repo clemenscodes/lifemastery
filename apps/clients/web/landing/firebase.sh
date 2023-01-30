@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
 fi
 
-[ -z "$CI" ] && npx nx export web-"$APP" --skip-nx-cache
+[ -d "$EXPORTED" ] || npx nx export web-"$APP" --skip-nx-cache
 [ -d "$FIREBASE_DIST" ] && rm -rf "$FIREBASE_DIST"
 cp -r $EXPORTED $FIREBASE_DIST
 
