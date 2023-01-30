@@ -1,7 +1,7 @@
 {
-    "name": "e2e-mobile-demo",
+    "name": "e2e-mobile-finance",
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "apps/e2e/mobile/demo/src",
+    "sourceRoot": "apps/e2e/mobile/finance/src",
     "projectType": "application",
     "targets": {
         "build-ios": {
@@ -25,20 +25,20 @@
             "executor": "@nrwl/detox:test",
             "options": {
                 "detoxConfiguration": "ios.sim.eas",
-                "buildTarget": "e2e-mobile-demo:build-ios"
+                "buildTarget": "e2e-mobile-finance:build-ios"
             },
             "configurations": {
                 "local": {
                     "detoxConfiguration": "ios.sim.local",
-                    "buildTarget": "e2e-mobile-demo:build-ios:local"
+                    "buildTarget": "e2e-mobile-finance:build-ios:local"
                 },
                 "bare": {
                     "detoxConfiguration": "ios.sim.debug",
-                    "buildTarget": "e2e-mobile-demo:build-ios:bare"
+                    "buildTarget": "e2e-mobile-finance:build-ios:bare"
                 },
                 "production": {
                     "detoxConfiguration": "ios.sim.release",
-                    "buildTarget": "e2e-mobile-demo:build-ios:production"
+                    "buildTarget": "e2e-mobile-finance:build-ios:production"
                 }
             }
         },
@@ -63,20 +63,20 @@
             "executor": "@nrwl/detox:test",
             "options": {
                 "detoxConfiguration": "android.emu.eas",
-                "buildTarget": "e2e-mobile-demo:build-ios"
+                "buildTarget": "e2e-mobile-finance:build-ios"
             },
             "configurations": {
                 "local": {
                     "detoxConfiguration": "android.emu.local",
-                    "buildTarget": "e2e-mobile-demo:build-ios:local"
+                    "buildTarget": "e2e-mobile-finance:build-ios:local"
                 },
                 "bare": {
                     "detoxConfiguration": "android.emu.debug",
-                    "buildTarget": "e2e-mobile-demo:build-ios:bare"
+                    "buildTarget": "e2e-mobile-finance:build-ios:bare"
                 },
                 "production": {
                     "detoxConfiguration": "android.emu.release",
-                    "buildTarget": "e2e-mobile-demo:build-ios:production"
+                    "buildTarget": "e2e-mobile-finance:build-ios:production"
                 }
             }
         },
@@ -84,10 +84,10 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["apps/e2e/mobile/demo/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["apps/e2e/mobile/finance/**/*.{ts,tsx,js,jsx}"]
             }
         }
     },
     "tags": [],
-    "implicitDependencies": ["mobile-demo"]
+    "implicitDependencies": ["mobile-finance"]
 }

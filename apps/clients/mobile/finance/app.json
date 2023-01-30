@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "MobileDemo",
-        "slug": "mobile-demo",
+        "name": "Finance",
+        "slug": "mobile-finance",
         "version": "1.0.0",
         "orientation": "portrait",
         "scheme": "capitaltracker",

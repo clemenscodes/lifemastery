@@ -1,6 +1,6 @@
 [workspace]
 members = [
-  "apps/src-tauri/demo",
+  "apps/src-tauri/finance",
   "apps/api",
   "libs/api/models/rust-api-models"
 ]

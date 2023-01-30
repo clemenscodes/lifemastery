@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DEVELOPMENT_PROJECT=""
-PRODUCTION_PROJECT=""
-APP=""
+DEVELOPMENT_PROJECT="landing-development"
+PRODUCTION_PROJECT="landing-production-375914"
+APP="landing"
 APP_DIR="apps/clients/web/$APP"
 FIREBASE_DIST="$APP_DIR/dist"
 EXPORTED="dist/$APP_DIR/exported"

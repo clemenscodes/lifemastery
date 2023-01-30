@@ -1,9 +1,9 @@
 {
-    "name": "universal-app-template",
+    "name": "lifemastery",
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "desktop:demo": "nx start web-demo",
+        "desktop:finance": "nx start web-finance",
         "format": "nx format:check && cargo fmt --all --check",
         "ci": "tools/scripts/ci.sh",
         "full": "tools/scripts/full.sh",

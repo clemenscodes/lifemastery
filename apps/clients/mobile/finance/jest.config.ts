@@ -1,9 +1,9 @@
 module.exports = {
-    displayName: 'web-demo',
+    displayName: 'mobile-finance',
     resolver: '@nrwl/jest/plugins/resolver',
-    preset: 'jest-expo/web',
+    preset: 'react-native',
     moduleFileExtensions: ['ts', 'js', 'tsx', 'jsx'],
-    coverageDirectory: '../../../../coverage/apps/clients/web/demo',
+    coverageDirectory: '../../../../coverage/apps/clients/mobile-finance',
     transformIgnorePatterns: [
         '<rootDir>/node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|moti|solito)',
     ],

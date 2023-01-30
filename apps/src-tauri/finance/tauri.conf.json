@@ -2,13 +2,13 @@
     "$schema": "../../../node_modules/@tauri-apps/cli/schema.json",
     "build": {
         "beforeBuildCommand": "",
-        "beforeDevCommand": "yarn desktop:demo",
+        "beforeDevCommand": "yarn desktop:finance",
         "devPath": "http://localhost:4200",
-        "distDir": "../../../dist/apps/clients/web/demo/exported",
+        "distDir": "../../../dist/apps/clients/web/finance/exported",
         "withGlobalTauri": true
     },
     "package": {
-        "productName": "demo-app",
+        "productName": "finance-app",
         "version": "0.0.1"
     },
     "tauri": {
@@ -30,7 +30,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "demo",
+            "identifier": "finance",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
@@ -59,7 +59,7 @@
                 "fullscreen": false,
                 "height": 600,
                 "resizable": true,
-                "title": "demo-app",
+                "title": "finance-app",
                 "width": 800
             }
         ]

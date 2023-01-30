@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DEVELOPMENT_PROJECT=""
-PRODUCTION_PROJECT=""
-APP=""
+DEVELOPMENT_PROJECT="finance-development-375914"
+PRODUCTION_PROJECT="finance-production-375914"
+APP="finance"
 CLOUD_RUN_REGION="europe-west1"
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"

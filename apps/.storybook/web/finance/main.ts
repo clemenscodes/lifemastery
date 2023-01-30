@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     core: { ...rootMain.core, builder: 'webpack5' },
     stories: [
         ...rootMain.stories,
-        '../../../clients/web/demo/stories/**/*.stories.?(ts|tsx|js|jsx)',
+        '../../../clients/web/finance/stories/**/*.stories.?(ts|tsx|js|jsx)',
     ],
     addons: [
         ...(rootMain.addons || []),

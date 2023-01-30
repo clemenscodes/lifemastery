@@ -105,9 +105,9 @@ jobs:
 #               if: needs.agents.result != 'failure' && needs.agents.result != 'cancelled' && needs.agents.result != 'skipped'
 #               uses: jameshenry/parallel-bash-commands@v1
 #               with:
-#                   cmd1: $NX_EXEC build --exclude=desktop-demo,web-demo
-#                   cmd2: $NX_EXEC test --exclude=desktop-demo
-#                   cmd3: $NX_EXEC lint --exclude=desktop-demo
+#                   cmd1: $NX_EXEC build --exclude=desktop-finance,web-finance
+#                   cmd2: $NX_EXEC test --exclude=desktop-finance
+#                   cmd3: $NX_EXEC lint --exclude=desktop-finance
 #                   cmd4: npx nx affected --base=$NX_BASE --head=$NX_HEAD --parallel=1 --target=e2e
 
 #             - name: Stop Agents

@@ -1,7 +1,7 @@
 {
-    "name": "e2e-web-demo",
+    "name": "e2e-web-finance",
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "apps/e2e/web/demo/src",
+    "sourceRoot": "apps/e2e/web/finance/src",
     "projectType": "application",
     "targets": {
         "e2e": {
@@ -9,15 +9,15 @@
             "executor": "@nrwl/cypress:cypress",
             "defaultConfiguration": "production",
             "options": {
-                "cypressConfig": "apps/e2e/web/demo/cypress.config.ts",
+                "cypressConfig": "apps/e2e/web/finance/cypress.config.ts",
                 "testingType": "e2e"
             },
             "configurations": {
                 "development": {
-                    "devServerTarget": "web-demo:start:development"
+                    "devServerTarget": "web-finance:start:development"
                 },
                 "production": {
-                    "devServerTarget": "web-demo:start:production"
+                    "devServerTarget": "web-finance:start:production"
                 }
             }
         },
@@ -25,10 +25,10 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["apps/e2e/web/demo/**/*.{js,ts}"]
+                "lintFilePatterns": ["apps/e2e/web/finance/**/*.{js,ts}"]
             }
         }
     },
     "tags": [],
-    "implicitDependencies": ["web-demo"]
+    "implicitDependencies": ["web-finance"]
 }
