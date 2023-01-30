@@ -42,5 +42,8 @@ cleanup() {
     exit 0
 }
 
-[ "$1" = "development" ] && deploy "$DEVELOPMENT_PROJECT"
-[ "$1" = "production" ] && deploy "$PRODUCTION_PROJECT"
+case "$1" in
+    development) deploy "$DEVELOPMENT_PROJECT" ;;
+    production) deploy "$PRODUCTION_PROJECT" ;;
+    *) echo "Invalid configuration: $1" && exit 1 ;;
+esac

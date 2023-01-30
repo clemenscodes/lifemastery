@@ -292,6 +292,7 @@ jobs:
                   done
 
             - name: Upload Exported Web Apps
+              if: matrix.platform == 'ubuntu-latest'
               uses: actions/upload-artifact@v3
               with:
                   name: exported
@@ -479,8 +480,6 @@ jobs:
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v2
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN}}
 
             - name: Restore Node Cache
               id: node_cache

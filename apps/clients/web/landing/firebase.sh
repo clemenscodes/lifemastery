@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
 fi
 
-[ -d "$EXPORTED" ] || npx nx export web-"$APP" --skip-nx-cache
+[ -z "$CI" ] && npx nx export web-"$APP" --skip-nx-cache
 [ -d "$FIREBASE_DIST" ] && rm -rf "$FIREBASE_DIST"
 cp -r $EXPORTED $FIREBASE_DIST
 
@@ -22,5 +22,8 @@ deploy() {
     exit 1
 }
 
-[ "$1" = "development" ] && deploy "$DEVELOPMENT_PROJECT"
-[ "$1" = "production" ] && deploy "$PRODUCTION_PROJECT"
+case "$1" in
+    development) deploy "$DEVELOPMENT_PROJECT" ;;
+    production) deploy "$PRODUCTION_PROJECT" ;;
+    *) echo "Invalid configuration: $1" && exit 1 ;;
+esac
