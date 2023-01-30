@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP="demo"
+APP="finance"
 APP_DIR="apps/clients/web/$APP"
 DIST="dist/$APP_DIR"
 PUBLIC="$DIST/public"

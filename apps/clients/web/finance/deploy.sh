@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DEVELOPMENT_PROJECT=""
-PRODUCTION_PROJECT=""
-APP=""
+DEVELOPMENT_PROJECT="finance-development-375914"
+PRODUCTION_PROJECT="finance-production-375914"
+APP="finance"
 CLOUD_RUN_REGION="europe-west1"
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"
@@ -42,5 +42,8 @@ cleanup() {
     exit 0
 }
 
-[ "$1" = "development" ] && deploy "$DEVELOPMENT_PROJECT"
-[ "$1" = "production" ] && deploy "$PRODUCTION_PROJECT"
+case "$1" in
+    development) deploy "$DEVELOPMENT_PROJECT" ;;
+    production) deploy "$PRODUCTION_PROJECT" ;;
+    *) echo "Invalid configuration: $1" && exit 1 ;;
+esac

@@ -1,6 +1,6 @@
-# Universal Application Template
+# LifeMastery
 
-This is a template repository for a scalable and universal application using ```React Native```, ```Next.js``` and ```TailwindCSS``` along with ```Jest```, ```Cypress``` and ```Storybook``` preconfigured. The project consists of a landing page and demo ```Solito``` app. All components are cross platform. For the native mobile app, ```Expo Router``` is used.
+This is a repository for a scalable and universal application using ```React Native```, ```Next.js``` and ```TailwindCSS``` along with ```Jest```, ```Cypress``` and ```Storybook``` preconfigured. The project consists of a landing page and finance ```Solito``` app. All components are cross platform. For the native mobile app, ```Expo Router``` is used.
 
 Additionally, a custom ```Rust``` server using ```Axum```, ```gRPC``` libraries, ```Tauri``` desktop support and a ```Docusaurus``` app are also included.
 
@@ -74,12 +74,12 @@ Then add the following cacheable operations to tasksRunnerOptions.default.option
 ## Running
 
 ```sh
-nx start web-landing  # run the landing page app
-nx start web-demo     # run the demo solito app
-nx start mobile-demo  # run the native app
-nx start desktop-demo # run the demo app natively using tauri 
-nx start api          # run the rust axum api
-nx start docs         # run the docusaurus app
+nx start web-landing     # run the landing page app
+nx start web-finance     # run the finance solito app
+nx start mobile-finance  # run the native app
+nx start desktop-finance # run the demo app natively using tauri 
+nx start api             # run the rust axum api
+nx start docs            # run the docusaurus app
 ```
 
 ## Developing
@@ -122,7 +122,7 @@ yarn debug 8 # test only failed targets
 ### Storybook
 
 ```sh
-nx start sb-web-demo    # run storybook for demo app
+nx start sb-web-finance # run storybook for demo app
 nx start sb-web-landing # run storybook for landing page app
 nx start sb-web-shared  # run storybook for shared components
 nx start sb-mobile      # run storybook on mobile for all components
@@ -131,9 +131,9 @@ nx start sb-mobile      # run storybook on mobile for all components
 ### Cypress
 
 ```sh
-nx e2e e2e-web-demo    # run cypress for demo app
-nx e2e e2e-web-landing # run cypress for landing page app
-nx e2e e2e-mobile-demo # run detox for mobile (needs configuration)
+nx e2e e2e-web-finance    # run cypress for demo app
+nx e2e e2e-web-landing    # run cypress for landing page app
+nx e2e e2e-mobile-finance # run detox for mobile (needs configuration)
 ```
 
 ## Deployment
@@ -142,9 +142,9 @@ By default, the pipeline only runs a setup job. Uncomment the remaining jobs in 
 
 The pipeline uses NxCloud Distributed Task Execution, so NxCloud usage is required and highly recommended.
 
-The CI/CD pipeline deploys the landing page to ```Firebase Hosting``` and the demo app to ```Google Cloud Run```, if the ```firebase.sh``` and ```deploy.sh``` scripts in the corresponding projects are adjusted according to the Google projects.
+The CI/CD pipeline deploys the landing page to ```Firebase Hosting``` and the finance app to ```Google Cloud Run```, if the ```firebase.sh``` and ```deploy.sh``` scripts in the corresponding projects are adjusted according to the Google projects.
 
-For the demo app, the CI will copy a standalone Next.js server in a ```Docker``` image, push the image to ```Google Artifact Registry``` and deploy the image with ```Google Cloud Run```. Afterwards, a cleanup job is run which deletes all images except for the most recent 5 images to stay in the free tier usage of the artifact registry. Currently the Docker image takes about 63 MB in the registry.
+For the finance app, the CI will copy a standalone Next.js server in a ```Docker``` image, push the image to ```Google Artifact Registry``` and deploy the image with ```Google Cloud Run```. Afterwards, a cleanup job is run which deletes all images except for the most recent 5 images to stay in the free tier usage of the artifact registry. Currently the Docker image takes about 63 MB in the registry.
 
 On pull requests, apps get deployed to development projects and after a merge to the main branch, the apps get built for all platforms (Windows, MacOS, Linux) and released using semantic versioning and deployed to production.
 

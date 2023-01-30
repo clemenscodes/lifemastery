@@ -1,7 +1,7 @@
 {
-    "name": "sb-web-demo",
+    "name": "sb-web-finance",
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "apps/.storybook/web/demo",
+    "sourceRoot": "apps/.storybook/web/finance",
     "projectType": "application",
     "targets": {
         "start": {
@@ -9,7 +9,7 @@
             "options": {
                 "uiFramework": "@storybook/react",
                 "port": 4400,
-                "configDir": "apps/.storybook/web/demo"
+                "configDir": "apps/.storybook/web/finance"
             },
             "configurations": {
                 "ci": {
@@ -22,7 +22,7 @@
             "outputs": ["{options.outputDir}"],
             "options": {
                 "uiFramework": "@storybook/react",
-                "configDir": "apps/.storybook/web/demo",
+                "configDir": "apps/.storybook/web/finance",
                 "outputDir": "dist/storybook/web"
             },
             "configurations": {
@@ -34,10 +34,10 @@
         "test-storybook": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "test-storybook -c apps/.storybook/web/demo/ --url=http://localhost:4400"
+                "command": "test-storybook -c apps/.storybook/web/finance/ --url=http://localhost:4400"
             }
         }
     },
-    "implicitDependencies": ["web-demo"],
+    "implicitDependencies": ["web-finance"],
     "tags": []
 }

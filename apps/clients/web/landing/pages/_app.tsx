@@ -18,8 +18,11 @@ function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Universal Fullstack Template</title>
-                <meta name="description" content="Universal Fullstack Template" />
+                <title>LifeMastery</title>
+                <meta
+                    name="description"
+                    content="LifeMastery is a suite of applications which aim to help organizing and optimizing yourself."
+                />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="app">

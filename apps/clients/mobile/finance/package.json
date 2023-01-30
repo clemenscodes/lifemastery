@@ -1,5 +1,5 @@
 {
-    "name": "mobile-demo",
+    "name": "mobile-finance",
     "private": true,
     "main": "index.js",
     "dependencies": {
@@ -28,6 +28,6 @@
         "solito": "*"
     },
     "scripts": {
-        "postinstall": "npx nx sync-deps mobile-demo && npx nx ensure-symlink mobile-demo"
+        "postinstall": "npx nx sync-deps mobile-finance && npx nx ensure-symlink mobile-finance"
     }
 }

@@ -547,7 +547,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "desktop-demo"
+name = "desktop-finance"
 version = "0.0.1"
 dependencies = [
  "serde",

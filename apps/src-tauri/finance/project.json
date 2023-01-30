@@ -1,8 +1,8 @@
 {
-    "name": "desktop-demo",
+    "name": "desktop-finance",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/src-tauri/demo",
+    "sourceRoot": "apps/src-tauri/finance/src",
     "targets": {
         "build": {
             "inputs": ["desktopExported"],
@@ -69,6 +69,6 @@
             "command": "cargo tauri build -- --locked"
         }
     },
-    "implicitDependencies": ["web-demo"],
+    "implicitDependencies": ["web-finance"],
     "tags": []
 }

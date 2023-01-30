@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DEVELOPMENT_PROJECT=""
-PRODUCTION_PROJECT=""
-APP=""
+DEVELOPMENT_PROJECT="landing-development"
+PRODUCTION_PROJECT="landing-production-375914"
+APP="landing"
 APP_DIR="apps/clients/web/$APP"
 FIREBASE_DIST="$APP_DIR/dist"
 EXPORTED="dist/$APP_DIR/exported"
@@ -22,5 +22,8 @@ deploy() {
     exit 1
 }
 
-[ "$1" = "development" ] && deploy "$DEVELOPMENT_PROJECT"
-[ "$1" = "production" ] && deploy "$PRODUCTION_PROJECT"
+case "$1" in
+    development) deploy "$DEVELOPMENT_PROJECT" ;;
+    production) deploy "$PRODUCTION_PROJECT" ;;
+    *) echo "Invalid configuration: $1" && exit 1 ;;
+esac

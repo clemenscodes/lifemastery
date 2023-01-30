@@ -1,7 +1,7 @@
 {
-    "name": "mobile-demo",
+    "name": "mobile-finance",
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "apps/clients/mobile/demo/src",
+    "sourceRoot": "apps/clients/mobile/finance/src",
     "projectType": "application",
     "targets": {
         "start": {
@@ -33,7 +33,7 @@
         "download": {
             "executor": "@nrwl/expo:download",
             "options": {
-                "output": "apps/clients/mobile/demo/dist"
+                "output": "apps/clients/mobile/finance/dist"
             }
         },
         "build-ios": {
@@ -93,7 +93,7 @@
             "executor": "@nrwl/expo:export",
             "options": {
                 "platform": "all",
-                "outputDir": "../../../../dist/apps/clients/mobile/demo"
+                "outputDir": "../../../../dist/apps/clients/mobile/finance"
             }
         },
         "export-web": {
@@ -106,14 +106,14 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["apps/clients/mobile/demo/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["apps/clients/mobile/finance/**/*.{ts,tsx,js,jsx}"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "apps/clients/mobile/demo/jest.config.ts",
+                "jestConfig": "apps/clients/mobile/finance/jest.config.ts",
                 "passWithNoTests": true
             }
         }
