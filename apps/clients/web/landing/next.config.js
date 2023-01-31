@@ -17,7 +17,7 @@ module.exports = async (phase, { defaultConfig }) => {
         images: {
             unoptimized: true,
         },
-        reactStrictMode: false,
+        reactStrictMode: true,
         swcMinify: true,
         output: 'standalone',
         experimental: {
