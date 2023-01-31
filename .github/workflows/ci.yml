@@ -17,6 +17,7 @@ env:
     NX_CLOUD_DISTRIBUTED_EXECUTION_STOP_AGENTS_ON_FAILURE: true
     NX_EXEC: 'npx nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT --target'
     CI: true
+    ARTEFACT_REGISTRY_REGION: europe-west3
 
 jobs:
     set-agents:
@@ -473,7 +474,7 @@ jobs:
               uses: google-github-actions/setup-gcloud@v1
 
             - name: Setup Docker Artifact Registry Auth
-              run: gcloud auth configure-docker europe-west3-docker.pkg.dev
+              run: gcloud auth configure-docker $ARTEFACT_REGISTRY_REGION-docker.pkg.dev
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
