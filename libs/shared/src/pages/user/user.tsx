@@ -8,7 +8,7 @@ export function UserScreen() {
     const [id] = useParam('id');
     return (
         <View className="flex-1 items-center justify-center">
-            <Text className="mb-4 text-center font-bold">{`User ID: ${id}`}</Text>
+            <Text className="mb-4 text-center font-bold ">{`User ID: ${id}`}</Text>
             <TextLink href="/">Go Home</TextLink>
         </View>
     );
