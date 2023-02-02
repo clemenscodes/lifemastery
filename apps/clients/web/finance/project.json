@@ -80,6 +80,9 @@
                 }
             }
         },
+        "kubernetes": {
+            "command": "apps/clients/web/finance/kubernetes.sh"
+        },
         "deploy": {
             "command": "apps/clients/web/finance/deploy.sh"
         }
