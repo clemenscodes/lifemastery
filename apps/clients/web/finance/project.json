@@ -80,6 +80,10 @@
                 }
             }
         },
+        "run-docker": {
+            "dependsOn": ["docker"],
+            "command": "apps/clients/web/finance/docker.sh"
+        },
         "kubernetes": {
             "command": "apps/clients/web/finance/kubernetes.sh"
         },

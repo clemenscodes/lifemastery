@@ -3,6 +3,8 @@
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
 APP="finance"
+BUCKET_NAME="lifemastery"
+SERVICE_ACCOUNT="lifemastery@landing-production-375914.iam.gserviceaccount.com"
 CLOUD_RUN_REGION="europe-west1"
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"
@@ -24,8 +26,24 @@ push_image() {
 
 deploy() {
     push_image "$1"
-    echo "gcloud run deploy $APP --image $TAGGED_IMAGE --allow-unauthenticated --region=$CLOUD_RUN_REGION --project=$1"
-    gcloud run deploy "$APP" --image "$TAGGED_IMAGE" --allow-unauthenticated --region="$CLOUD_RUN_REGION" --project="$1" && cleanup
+    echo "gcloud run deploy $APP \
+        --args--cap-add SYS_ADMIN --device /dev/fuse \
+        --image $TAGGED_IMAGE \
+        --allow-unauthenticated \
+        --service-account $SERVICE_ACCOUNT \
+        --exectuion-environment gen2 \
+        --region=$CLOUD_RUN_REGION \
+        --update-env-vars BUCKET=$BUCKET_NAME \
+        --project=$1"
+    gcloud run deploy "$APP" \
+        --args"--cap-add SYS_ADMIN --device /dev/fuse" \
+        --image "$TAGGED_IMAGE" \
+        --allow-unauthenticated \
+        --service-account "$SERVICE_ACCOUNT" \
+        --exectuion-environment gen2 \
+        --region="$CLOUD_RUN_REGION" \
+        --update-env-vars BUCKET="$BUCKET_NAME" \
+        --project="$1" && cleanup
 }
 
 cleanup() {
