@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-MNT_DIR="/app/dist"
+MNT_DIR="/app/sync/dist/$APP_DIR/.next/server/pages"
 # Create mount directory for service
 mkdir -p "$MNT_DIR"
 chown nextjs:nodejs "$MNT_DIR" "$GOOGLE_APPLICATION_CREDENTIALS"

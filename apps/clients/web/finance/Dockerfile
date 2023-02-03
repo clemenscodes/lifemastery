@@ -31,10 +31,9 @@ WORKDIR $APP_HOME
 RUN addgroup nodejs
 RUN adduser nextjs
 
-COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/standalone/$APP_DIR ./$APP_DIR
-COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/standalone/libs ./libs
-COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/standalone/package.json ./
-COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/standalone/node_modules ./node_modules
+COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/standalone ./
+COPY --chown=nextjs:nodejs dist/$APP_DIR/public ./$APP_DIR/public
+COPY --chown=nextjs:nodejs dist/$APP_DIR/.next/static ./dist/$APP_DIR/.next/static
 COPY --chown=nextjs:nodejs $APP_DIR/gcsfuse.sh ./
 
 EXPOSE $PORT
