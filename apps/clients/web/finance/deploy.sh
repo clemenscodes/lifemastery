@@ -11,7 +11,7 @@ REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
 SHA=$(git rev-parse HEAD)
 TAG="sha-$SHA"
-IMAGE_COUNT_THRESHOLD=5
+IMAGE_COUNT_THRESHOLD=1
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1

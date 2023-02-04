@@ -20,12 +20,6 @@ fi
 run() {
     REPO="$ARTIFACT_REGION-$REGISTRY/$1/$APP"
     IMAGE="$REPO/$IMAGE_NAME"
-    echo "docker run
-        --device /dev/fuse
-        --cap-add SYS_ADMIN
-        -v $HOST_CREDENTIALS_PATH:$CONTAINER_CREDENTIALS_PATH:ro
-        -e GOOGLE_APPLICATION_CREDENTIALS=$CONTAINER_CREDENTIALS_PATH
-        $IMAGE:$TAG"
     docker run \
         --device /dev/fuse \
         --cap-add SYS_ADMIN \
