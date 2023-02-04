@@ -29,14 +29,6 @@ echo "Starting Next.js app..."
 exec su - nextjs -c "node $APP_HOME/$APP_DIR/server.js" &
 echo "Next.js app started"
 
-while true; do
-    echo "Syncing changes from instance to storage..."
-    cmd "gsutil -m rsync -r $CONTAINER_PAGES $BUCKET_ADDRESS"
-    echo "Syncing changes from storage to instance..."
-    cmd "gsutil -m rsync -r $BUCKET_ADDRESS $CONTAINER_PAGES "
-    sleep 1
-done &
-
 # Exit immediately when one of the background processes terminate.
 wait -n
 
