@@ -467,9 +467,8 @@ jobs:
               id: auth
               uses: google-github-actions/auth@v1
               with:
-                  token_format: access_token
-                  workload_identity_provider: projects/219710367033/locations/global/workloadIdentityPools/workload-identity-pool/providers/github
-                  service_account: github-actions@landing-production-375914.iam.gserviceaccount.com
+                  workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+                  service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
             - name: Set up Cloud SDK
               uses: google-github-actions/setup-gcloud@v1
