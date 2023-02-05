@@ -1,12 +1,12 @@
 #!/bin/sh
 
-HOST_CREDENTIALS_PATH="$HOME/.config/gcloud/landing-production-375914-153e51456a41.json"
-
+APP="finance"
 APP_HOME="/app"
 CONTAINER_CREDENTIALS_PATH="$APP_HOME/credentials.json"
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
-APP="finance"
+SERVICE_ACCOUNT="lifemastery@landing-production-375914.iam.gserviceaccount.com"
+HOST_CREDENTIALS_PATH="$HOME/.config/gcloud/landing-production-375914-153e51456a41.json"
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
@@ -25,6 +25,8 @@ run() {
         --cap-add SYS_ADMIN \
         -v "$HOST_CREDENTIALS_PATH":"$CONTAINER_CREDENTIALS_PATH" \
         -e GOOGLE_APPLICATION_CREDENTIALS="$CONTAINER_CREDENTIALS_PATH" \
+        -e SERVICE_ACCOUNT="$SERVICE_ACCOUNT" \
+        -e LOCAL="true" \
         -p 3000:3000 \
         "$IMAGE":"$TAG"
 }

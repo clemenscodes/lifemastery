@@ -33,12 +33,11 @@ ENV HOSTNAME localhost
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV APP_DIR apps/clients/web/$APP
-ENV BUCKET lifemastery
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
 WORKDIR $APP_HOME
 
-RUN mkdir -p $BUCKET && chown nextjs:nodejs $BUCKET
+RUN mkdir gcsfuse && chown nextjs:nodejs gcsfuse
 
 USER nextjs
 
@@ -50,8 +49,11 @@ COPY --chown=nextjs:nodejs $APP_DIR/gcsfuse.sh ./
 
 EXPOSE $PORT
 
-# Use tini to manage zombie processes and signal forwarding
-# https://github.com/krallin/tini
+# Ensure the script is executable
+RUN chmod +x /app/gcsfuse.sh
+
+# # Use tini to manage zombie processes and signal forwarding
+# # https://github.com/krallin/tini
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Pass the startup script as arguments to Tini
