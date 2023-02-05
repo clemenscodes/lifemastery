@@ -54,7 +54,7 @@
             "dependsOn": ["build"],
             "command": "./apps/clients/web/finance/standalone.sh"
         },
-        "docker": {
+        "image": {
             "executor": "@nx-tools/nx-container:build",
             "defaultConfiguration": "development",
             "options": {
@@ -77,6 +77,18 @@
                         ],
                         "tags": ["type=schedule", "type=sha"]
                     }
+                }
+            }
+        },
+        "docker": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte"
+                },
+                "production": {
+                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte --configuration=production"
                 }
             }
         },

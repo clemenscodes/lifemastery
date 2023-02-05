@@ -7,7 +7,7 @@ console.log = jest.fn();
 
 describe('Index', () => {
     it('should render successfully', () => {
-        const { container } = render(<Index />);
+        const { container } = render(<Index rand={[2]} />);
         expect(container).toBeTruthy();
     });
 });

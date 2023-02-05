@@ -1,26 +1,60 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# Create mount directory for service
-echo "mnt: $MNT_DIR"
-mkdir -p "$MNT_DIR"
-ls "$MNT_DIR"
-chown nextjs:nodejs "$MNT_DIR" "$GOOGLE_APPLICATION_CREDENTIALS"
-ls "$MNT_DIR"
+BUCKET_ADDRESS="$(gsutil ls)"
+BUCKET="$(echo "$BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
+CONTAINER_PAGES="$APP_HOME/dist/$APP_DIR/.next/server/pages"
+SERVER="$APP_HOME/$APP_DIR/server.js"
+MNT_DIR="$APP_HOME/gcsfuse"
 
-echo "Mounting GCS Fuse."
-gcsfuse_command="gcsfuse -o nonempty --key-file=$GOOGLE_APPLICATION_CREDENTIALS --foreground --debug_http --debug_gcs --debug_fuse --implicit-dirs $BUCKET $MNT_DIR"
-echo "$gcsfuse_command"
-exec su - nextjs -c "$gcsfuse_command" &
-echo "Mounting completed."
+sync() {
+    echo "Syncing newer files from $1 to $2..."
+    gsutil -m rsync -u -r "$1" "$2"
+    echo "Done syncing files from $1 to $2..."
+}
 
-# mv "$APP_HOME"/static "$APP_HOME"/dist/"$APP_DIR"/.next/static
+authorize_gcloud() {
+    if [ -n "$LOCAL" ]; then
+        echo "Authorizing..."
+        gcloud auth activate-service-account "$SERVICE_ACCOUNT" --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
+    fi
+}
 
-# Run the web app on container startup.
-# to be equal to the cores available.
-# Timeout is set to 0 to disable the timeouts of the workers to allow Cloud Run to handle instance scaling.
-sleep 2
-exec su - nextjs -c "cp -r /app/dist/$APP_DIR/.next/static /app/buckets/static && node /app/$APP_DIR/server.js" &
+mount_google_cloud_storage() {
+    echo "Mounting GCS Fuse."
+    if [ -n "$LOCAL" ]; then
+        exec gcsfuse --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --foreground --debug_gcs "$BUCKET" "$MNT_DIR" &
+    else
+        echo "Mounting in Cloud Run..."
+        exec gcsfuse --foreground --debug_gcs "$BUCKET" "$MNT_DIR" &
+    fi
+    echo "Mounting completed."
+    sync "$BUCKET_ADDRESS" "$CONTAINER_PAGES"
+}
+
+start_nextjs_app() {
+    echo "Starting Next.js app..."
+    exec node "$SERVER" &
+    echo "Next.js app started"
+}
+
+cleanup() {
+    echo "Cleaning up..."
+    sync "$CONTAINER_PAGES" "$BUCKET_ADDRESS"
+    echo "Adios."
+}
+
+authorize_gcloud
+mount_google_cloud_storage
+start_nextjs_app
+
+while true; do
+    sync "$CONTAINER_PAGES" "$BUCKET_ADDRESS"
+    sync "$BUCKET_ADDRESS" "$CONTAINER_PAGES"
+    sleep 1
+done &
 
 # Exit immediately when one of the background processes terminate.
 wait -n
+
+cleanup
