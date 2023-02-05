@@ -52,8 +52,8 @@ EXPOSE $PORT
 # Ensure the script is executable
 RUN chmod +x /app/gcsfuse.sh
 
-# # Use tini to manage zombie processes and signal forwarding
-# # https://github.com/krallin/tini
+# Use tini to manage zombie processes and signal forwarding
+# https://github.com/krallin/tini
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Pass the startup script as arguments to Tini

@@ -10,8 +10,7 @@ HOST_CREDENTIALS_PATH="$HOME/.config/gcloud/landing-production-375914-153e51456a
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
-SHA=$(git rev-parse --short HEAD)
-TAG="sha-$SHA"
+TAG=$(git rev-parse --short HEAD)
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1

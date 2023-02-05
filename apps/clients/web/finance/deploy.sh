@@ -9,8 +9,7 @@ CLOUD_RUN_REGION="europe-west1"
 ARTIFACT_REGION="europe-west3"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
-SHA=$(git rev-parse --short HEAD)
-TAG="sha-$SHA"
+TAG=$(git rev-parse --short HEAD)
 IMAGE_COUNT_THRESHOLD=1
 
 if [ -z "$1" ]; then
@@ -27,20 +26,20 @@ push_image() {
 
 deploy() {
     push_image "$1"
-#     echo "gcloud run deploy $APP
-#         --image $TAGGED_IMAGE
-#         --allow-unauthenticated
-#         --execution-environment gen2
-#         --service-account $2
-#         --region=$CLOUD_RUN_REGION
-#         --project=$1"
-#     gcloud run deploy "$APP" \
-#         --image "$TAGGED_IMAGE" \
-#         --allow-unauthenticated \
-#         --execution-environment gen2 \
-#         --service-account "$2" \
-#         --region="$CLOUD_RUN_REGION" \
-#         --project="$1"
+    echo "gcloud run deploy $APP
+        --image $TAGGED_IMAGE
+        --allow-unauthenticated
+        --execution-environment gen2
+        --service-account $2
+        --region=$CLOUD_RUN_REGION
+        --project=$1"
+    gcloud run deploy "$APP" \
+        --image "$TAGGED_IMAGE" \
+        --allow-unauthenticated \
+        --execution-environment gen2 \
+        --service-account "$2" \
+        --region="$CLOUD_RUN_REGION" \
+        --project="$1" &&
         cleanup
 }
 
@@ -50,9 +49,9 @@ cleanup() {
     IMAGE_COUNT=$(echo "$IMAGES" | wc -l | tr -d ' ')
     i="$IMAGE_COUNT_THRESHOLD"
     while [ $i -lt "$IMAGE_COUNT" ]; do
-        OLD_TAG=$(echo "$IMAGES" | sed -n "${i}p" | awk '{print $3}')
-        echo "gcloud artifacts docker images delete $IMAGE:$OLD_TAG"
-        echo "" | gcloud artifacts docker images delete "$IMAGE:$OLD_TAG" || exit 1
+        DIGEST=$(echo "$IMAGES" | sed -n "${i}p" | awk '{print $2}')
+        echo "gcloud artifacts docker images delete $IMAGE@$DIGEST"
+        echo "" | gcloud artifacts docker images delete "$IMAGE@$DIGEST" --delete-tags || exit 1
         i=$((i + 1))
     done
     exit 0
