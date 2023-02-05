@@ -23,6 +23,7 @@ module.exports = async (phase, { defaultConfig }) => {
         experimental: {
             outputFileTracingRoot: join(__dirname, '../../../../'),
             forceSwcTransforms: true, // set this to true to use reanimated + swc experimentally
+            isrMemoryCacheSize: 0,
         },
         nx: {
             // Set this to true if you would like to to use SVGR

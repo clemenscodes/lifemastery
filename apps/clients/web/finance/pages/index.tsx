@@ -3,10 +3,17 @@
 import path from 'path';
 path.resolve('./next.config.js');
 
-import { HomeScreen } from '@shared';
-
-function Index() {
-    return <HomeScreen />;
+export async function getStaticProps() {
+    // get random number between 1 and 100
+    const rand = Array.from({ length: 1 }, () => Math.floor(Math.random() * 100));
+    return {
+        props: {
+            rand,
+        }, // will be passed to the page component as props
+        revalidate: 30, // In seconds
+    };
 }
 
-export default Index;
+import { HomeScreen } from '@shared';
+
+export default HomeScreen;

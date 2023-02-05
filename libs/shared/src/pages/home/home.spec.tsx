@@ -7,7 +7,7 @@ jest.mock('next/router', () => require('next-router-mock'));
 describe('Home', () => {
     afterEach(fixTestingConsoleError);
     it('should render successfully', () => {
-        const { container } = render(<HomeScreen />);
+        const { container } = render(<HomeScreen rand={[2]} />);
         expect(container).toBeTruthy();
     });
 });

@@ -2,11 +2,9 @@
 // see https://github.com/nrwl/nx/issues/9017#issuecomment-1284740346
 import path from 'path';
 path.resolve('./next.config.js');
-
-import { A, H1, P, View } from '@shared';
-import { log } from '@utils';
 import { initializeApp } from 'firebase/app';
-
+import { log } from '@utils';
+import { A, H1, P, View } from '@shared';
 const devConfig = {
     apiKey: 'AIzaSyCdvFCH43ZS_30Lovqr3KjS77vCN_eIARc',
     authDomain: 'landing-development.firebaseapp.com',
@@ -16,6 +14,7 @@ const devConfig = {
     appId: '1:199081405669:web:17551acbb212b822fc780c',
     measurementId: 'G-FR41SE2YMD',
 };
+
 const prodConfig = {
     apiKey: 'AIzaSyC0s0wGP-hOWs8j8918DXLhdI_al9aR-oo',
     authDomain: 'landing-production-375914.firebaseapp.com',

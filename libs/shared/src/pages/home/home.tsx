@@ -3,13 +3,21 @@ import { View } from '../../styles/view/view';
 import { Row } from '../../styles/layout/layout';
 import { MotiLink } from 'solito/moti';
 
-/* eslint-disable-next-line */
-export interface HomeProps {}
+export interface HomeProps {
+    rand: number[];
+}
 
-export function HomeScreen(props: HomeProps) {
+export function HomeScreen({ rand }: HomeProps) {
     return (
         <View className="flex-1 items-center justify-center p-3">
             <H1 testID="heading">Welcome to Solito.</H1>
+            <View>
+                {rand.map((item) => (
+                    <View key={item}>
+                        <H1>Random number: {item}</H1>
+                    </View>
+                ))}
+            </View>
             <View className="max-w-xl">
                 <P className="text-center">
                     Here is a basic starter to show you how you can navigate from one screen to
