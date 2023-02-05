@@ -57,7 +57,6 @@ export function HomeScreen({ rand }: HomeProps) {
                     href="/user/fernando"
                     animate={({ hovered, pressed }) => {
                         'worklet';
-
                         return {
                             scale: pressed ? 0.95 : hovered ? 1.1 : 1,
                             rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
