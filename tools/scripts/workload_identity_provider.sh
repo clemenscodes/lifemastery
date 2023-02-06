@@ -1,24 +1,19 @@
 #!/bin/sh
 set -e
 
-GITHUB_USERNAME="clemenscodes"
-GITHUB_REPO_NAME="lifemastery"
-
 SERVICE_ACCOUNT_NAME="github-actions" # Must match [a-zA-Z][a-zA-Z\d\-]*[a-zA-Z\d]
 POOL="workload-identity-pool" # Must be between 4 and 32 characters
 POOL_DISPLAY_NAME="Workload Identity Pool"
 PROVIDER="github"
-PROVIDER_DISPLAY_NAME="github"
+PROVIDER_DISPLAY_NAME="GitHub Identity Provider"
 PROJECT_ID=$(gcloud config get project)
 SERVICE_ACCOUNT="$SERVICE_ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com"
-REPO="$GITHUB_USERNAME/$GITHUB_REPO_NAME"
+REPO="$(gh repo view --json nameWithOwner -q ".nameWithOwner")"
 GITHUB_ACTIONS_IDENTITY_PROVIDER="https://token.actions.githubusercontent.com"
-WORKLOAD_IDENTITY_PROVIDER_ID=$(extract_provider_resource_name)
 ATTRIBUTE_MAPPINGS="\
 google.subject=assertion.sub,\
 attribute.actor=assertion.actor,\
 attribute.repository=assertion.repository,\
-google.subject=assertion.sub,\
 attribute.repository_owner=assertion.repository_owner,\
 "
 create_service_account() {
@@ -41,6 +36,7 @@ get_workload_identity_pool_id() {
       --project="$PROJECT_ID" \
       --location="global" \
       --format="value(name)")"
+    echo "$WORKLOAD_IDENTITY_POOL_ID"
 }
 
 create_workload_identity_provider_in_pool() {
@@ -61,17 +57,22 @@ allow_auth_from_provider() {
 }
 
 extract_provider_resource_name() {
-    gcloud iam workload-identity-pools providers describe "$PROVIDER" \
+    WORKLOAD_IDENTITY_PROVIDER_ID=$(gcloud iam workload-identity-pools providers describe "$PROVIDER" \
       --project="$PROJECT_ID" \
       --location="global" \
       --workload-identity-pool="$POOL" \
-      --format="value(name)"
+      --format="value(name)")
+    echo "$WORKLOAD_IDENTITY_PROVIDER_ID"
+}
+
+set_secrets() {
+    gh secret set WORKLOAD_IDENTITY_PROVIDER --body "$WORKLOAD_IDENTITY_PROVIDER"
+    gh secret set SERVICE_ACCOUNT --body "$SERVICE_ACCOUNT"
 }
 
 echo "Setting up Workload Identity Federation"
 echo
-echo "GitHub User: $GITHUB_USERNAME"
-echo "GitHub Repository: $GITHUB_REPO_NAME"
+echo "Repository: $REPO"
 echo "Service Account Name: $SERVICE_ACCOUNT_NAME"
 echo "Pool: $POOL"
 echo "Pool Display Name: $POOL_DISPLAY_NAME"
@@ -139,5 +140,6 @@ echo "Extracted workload identity provider resource for provider $PROVIDER in po
 echo
 echo "Set up Workload Identity Federation"
 echo
-echo "workload_identity_provider: $WORKLOAD_IDENTITY_PROVIDER_ID"
-echo "service_account: $SERVICE_ACCOUNT"
+echo "Setting repository secrets for GitHub Actions"
+set_secrets
+echo "Done"

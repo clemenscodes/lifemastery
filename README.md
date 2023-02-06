@@ -20,6 +20,8 @@ To setup this project, following dependencies will be needed:
 - Tauri CLI (installed via ```cargo install tauri-cli```)
 - Protocol Buffers Compiler and Protocol Buffers resource files
 - Docker buildx engine (for deployments)
+- Authorized GitHub CLI
+- Authorized gcloud CLI
 
 ## Installation
 
@@ -142,6 +144,8 @@ By default, the pipeline only runs a setup job. Uncomment the remaining jobs in 
 
 The pipeline uses NxCloud Distributed Task Execution, so NxCloud usage is required and highly recommended.
 
+On pull requests, apps get deployed to development projects and after a merge to the main branch, the apps get built for all platforms (Windows, MacOS, Linux) and released using semantic versioning and deployed to production.
+
 The CI/CD pipeline deploys the landing page to ```Firebase Hosting``` and the finance app to ```Google Cloud Run```, if the ```firebase.sh``` and ```deploy.sh``` scripts in the corresponding projects are adjusted according to the Google projects.
 
 For the finance app, the CI will copy a standalone Next.js server in a ```Docker``` image, push the image to ```Google Artifact Registry``` and deploy the image with ```Google Cloud Run```.
@@ -152,19 +156,20 @@ To deploy this yourself, you need to create a service account that will be used 
 
 Then add that service account to the bucket in Google Cloud Storage with the permssions ```Google Storage Admin``` and ```Google Storage Object Admin```.
 
-Afterwards, a cleanup job is run which deletes all images except for the most recent 5 images to stay in the free tier usage of the artifact registry.
+Afterwards, a cleanup job is run which deletes all images except for the most recent image to stay in the free tier usage of the artifact registry.
 
-On pull requests, apps get deployed to development projects and after a merge to the main branch, the apps get built for all platforms (Windows, MacOS, Linux) and released using semantic versioning and deployed to production.
+A repository secret ```REPO_GITHUB_TOKEN``` with write permissions to the repository is required for the pipeline.
 
-Repository secrets ```WORKLOAD_IDENTITY_PROVIDER```, ```SERVICE_ACCOUNT``` for the Google Workload Identity Federation and ```REPO_GITHUB_TOKEN``` with write permissions to the repository are required for the pipeline.
+It is also necessary to setup ```Google Workload Identity Federation``` to authorize the job runner to GCP and increase security.
 
-To setup workload identity federation, update the values in the script ```tools/scripts/workload_identity_provider.sh```.
+To set this up, run ```tools/scripts/workload_identity_provider.sh```.
 
-For this script to work, you need to have setup an organization on GCP, ```gcloud``` installed and authorized it after running ```gcloud init``` and ```gcloud auth login```.
+For this script to work, you need to have the GitHub CLI installed as well as setup an organization on GCP.
+It assumes you have ```gcloud``` installed and authorized by running ```gcloud init``` and ```gcloud auth login```.
 
-The script will generate the correct values for the secrets, or you can simply use the generated values as inputs for the auth action.
+The script will create a service account called ```github-actions```, configure workload identity federation by creating a pool called ```workload-identity-pool``` with the GitHub provider and add the repository secrets with the correct values for the auth action.
 
-Now you need to add the created service account to the projects that you want to get access to and provide the permissions you need.
+Then you need to add the created service account to the projects that you want to get access to and provide the permissions you need.
 
 To scale the CI horizontally, simply update the ```NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT``` environment variable in ```.github/workflows/ci.yml``` to the required amount of agents.
 
