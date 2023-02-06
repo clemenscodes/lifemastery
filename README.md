@@ -164,10 +164,12 @@ It is also necessary to setup ```Google Workload Identity Federation``` to autho
 
 To set this up, run ```tools/scripts/workload_identity_provider.sh```.
 
+<img src="examples/workload_identity_federation.gif">
+
 For this script to work, you need to have the GitHub CLI installed as well as setup an organization on GCP.
 It assumes you have ```gcloud``` installed and authorized by running ```gcloud init``` and ```gcloud auth login```.
 
-The script will create a service account called ```github-actions```, configure workload identity federation by creating a pool called ```workload-identity-pool``` with the GitHub provider and add the repository secrets with the correct values for the auth action.
+The script will create a service account called ```gh-actions```, configure workload identity federation by creating a pool called ```gh-workload-identity``` with the GitHub provider and add the repository secrets with the correct values for the auth action.
 
 Then you need to add the created service account to the projects that you want to get access to and provide the permissions you need.
 
