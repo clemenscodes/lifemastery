@@ -28,6 +28,7 @@ const cloudRunAssetPrefix = isCloudRunProd ? prodCDN : devCDN;
 const assetPrefix = isCloudRun ? cloudRunAssetPrefix : '';
 
 function CustomApp({ Component, pageProps }: AppProps) {
+    console.log(process.env.PROJECT_TYPE);
     return (
         <>
             <Head>
