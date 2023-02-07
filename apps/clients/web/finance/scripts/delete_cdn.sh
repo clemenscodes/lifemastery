@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 APP="finance"
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"

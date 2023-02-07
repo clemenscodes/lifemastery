@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-BUCKET_ADDRESS="$(gsutil ls)"
+PROJECT=$(gcloud config get project)
+PROJECT_TYPE=$(echo "$PROJECT" | awk -F '-' '{print $2}')
+BUCKET_ADDRESS="$(gsutil ls | grep -v cdn)"
 BUCKET="$(echo "$BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
 CONTAINER_PAGES="$APP_HOME/dist/$APP_DIR/.next/server/pages"
 SERVER="$APP_HOME/$APP_DIR/server.js"
 MNT_DIR="$APP_HOME/gcsfuse"
+
+export PROJECT_TYPE="$PROJECT_TYPE"
 
 sync() {
     echo "Syncing newer files from $1 to $2..."
@@ -15,7 +19,7 @@ sync() {
 
 authorize_gcloud() {
     if [ -n "$LOCAL" ]; then
-        echo "Authorizing..."
+        echo "Authorizing locally..."
         gcloud auth activate-service-account "$SERVICE_ACCOUNT" --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
     fi
 }
@@ -23,6 +27,7 @@ authorize_gcloud() {
 mount_google_cloud_storage() {
     echo "Mounting GCS Fuse."
     if [ -n "$LOCAL" ]; then
+        echo "Mounting locally..."
         exec gcsfuse --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --foreground --debug_gcs "$BUCKET" "$MNT_DIR" &
     else
         echo "Mounting in Cloud Run..."

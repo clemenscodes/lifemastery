@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 APP="finance"
 APP_HOME="/app"
 CONTAINER_CREDENTIALS_PATH="$APP_HOME/credentials.json"
