@@ -23,7 +23,7 @@ upload_assets_to_cdn() {
     echo "Bucket address: $BUCKET_ADDRESS"
     PUBLIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/public"
     echo "Public: $PUBLIC_BUCKET_ADDRESS"
-    STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static/"
+    STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static"
     echo "Static: $STATIC_BUCKET_ADDRESS"
     upload_static
     upload_public
@@ -31,12 +31,12 @@ upload_assets_to_cdn() {
 
 upload_static() {
     echo "Uploading static assets to $STATIC_BUCKET_ADDRESS"
-    gsutil -m rsync -p "$PROJECT_ID" -u -r "$STATIC" "$STATIC_BUCKET_ADDRESS"
+    gsutil -m rsync -u -r "$STATIC" "$STATIC_BUCKET_ADDRESS"
 }
 
 upload_public() {
     echo "Uploading public assets to $PUBLIC_BUCKET_ADDRESS"
-    gsutil -m rsync -p "$PROJECT_ID" -u -r "$PUBLIC" "$PUBLIC_BUCKET_ADDRESS/"
+    gsutil -m rsync -u -r "$PUBLIC" "$PUBLIC_BUCKET_ADDRESS"
 }
 
 case "$1" in
