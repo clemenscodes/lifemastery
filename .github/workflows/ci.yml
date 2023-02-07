@@ -523,9 +523,21 @@ jobs:
             - name: Install Firebase
               run: npm i -g firebase-tools
 
-            - name: Build Apps (standalone)
+            - name: Build Apps (development)
+              if: github.event.pull_request.head.repo.full_name == github.repository
               run: |
-                  npx nx run-many \
+                  PROJECT_TYPE=development npx nx run-many \
+                      --target=build \
+                      --no-dte \
+                      --projects="web-*" \
+                      --exclude=web-landing \
+                      --skip-nx-cache \
+                      --output-style=stream
+
+            - name: Build Apps (production)
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
+              run: |
+                  PROJECT_TYPE=production npx nx run-many \
                       --target=build \
                       --no-dte \
                       --projects="web-*" \
