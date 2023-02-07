@@ -2,13 +2,6 @@
 set -e
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
-FULL_BUCKET_ADDRESS="$(gsutil ls | grep cdn)"
-BUCKET="$(echo "$FULL_BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
-BUCKET_ADDRESS="gs://$BUCKET"
-PUBLIC="dist/apps/clients/web/finance/public"
-PUBLIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/public"
-STATIC="dist/apps/clients/web/finance/.next/static"
-STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static/"
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
@@ -24,6 +17,13 @@ upload_assets_to_cdn() {
 set_project() {
     echo "Setting project to $PROJECT_ID"
     gcloud config set project "$PROJECT_ID"
+    FULL_BUCKET_ADDRESS="$(gsutil ls | grep cdn)"
+    BUCKET="$(echo "$FULL_BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
+    BUCKET_ADDRESS="gs://$BUCKET"
+    PUBLIC="dist/apps/clients/web/finance/public"
+    PUBLIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/public"
+    STATIC="dist/apps/clients/web/finance/.next/static"
+    STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static/"
 }
 
 upload_static() {
