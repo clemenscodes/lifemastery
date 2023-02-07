@@ -5,6 +5,7 @@
     "projectType": "application",
     "targets": {
         "start": {
+            "dependsOn": ["build"],
             "executor": "@nrwl/next:server",
             "defaultConfiguration": "development",
             "options": {
@@ -50,10 +51,6 @@
                 "lintFilePatterns": ["apps/clients/web/finance/**/*.{ts,tsx,js,jsx}"]
             }
         },
-        "standalone": {
-            "dependsOn": ["build"],
-            "command": "./apps/clients/web/finance/standalone.sh"
-        },
         "image": {
             "executor": "@nx-tools/nx-container:build",
             "defaultConfiguration": "development",
@@ -92,15 +89,22 @@
                 }
             }
         },
+        "standalone": {
+            "dependsOn": ["build"],
+            "command": "./apps/clients/web/finance/scripts/standalone.sh"
+        },
         "run-docker": {
             "dependsOn": ["docker"],
-            "command": "apps/clients/web/finance/docker.sh"
+            "command": "apps/clients/web/finance/scripts/docker.sh"
         },
         "kubernetes": {
-            "command": "apps/clients/web/finance/kubernetes.sh"
+            "command": "apps/clients/web/finance/scripts/kubernetes.sh"
         },
         "deploy": {
-            "command": "apps/clients/web/finance/deploy.sh"
+            "command": "apps/clients/web/finance/scripts/deploy.sh"
+        },
+        "cdn": {
+            "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
         }
     },
     "tags": []

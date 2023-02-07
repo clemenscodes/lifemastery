@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-BUCKET_ADDRESS="$(gsutil ls)"
+BUCKET_ADDRESS="$(gsutil ls | grep -v cdn)"
 BUCKET="$(echo "$BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
 CONTAINER_PAGES="$APP_HOME/dist/$APP_DIR/.next/server/pages"
 SERVER="$APP_HOME/$APP_DIR/server.js"
@@ -15,7 +15,7 @@ sync() {
 
 authorize_gcloud() {
     if [ -n "$LOCAL" ]; then
-        echo "Authorizing..."
+        echo "Authorizing locally..."
         gcloud auth activate-service-account "$SERVICE_ACCOUNT" --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
     fi
 }
@@ -23,6 +23,7 @@ authorize_gcloud() {
 mount_google_cloud_storage() {
     echo "Mounting GCS Fuse."
     if [ -n "$LOCAL" ]; then
+        echo "Mounting locally..."
         exec gcsfuse --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --foreground --debug_gcs "$BUCKET" "$MNT_DIR" &
     else
         echo "Mounting in Cloud Run..."

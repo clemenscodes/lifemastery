@@ -14,13 +14,23 @@ if (process.browser) {
 import { enableSwcHack } from 'moti';
 enableSwcHack();
 
+const apexDomain = 'lifemastery.tech';
+const appName = 'finance';
+const prodCDN = `https://static.${appName}.${apexDomain}/public`;
+const devCDN = `https://dev.static.${appName}.${apexDomain}/public`;
+const isCloudRunProd = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'production';
+const isCloudRunDev = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'development';
+const isCloudRun = isCloudRunDev || isCloudRunProd;
+const cloudRunAssetPrefix = isCloudRunProd ? prodCDN : devCDN;
+const assetPrefix = isCloudRun ? cloudRunAssetPrefix : '';
+
 function CustomApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
                 <title>Capital Tracker</title>
                 <meta name="description" content="Capital Tracker" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href={`${assetPrefix}/favicon.ico`} />
             </Head>
             <main className="app">
                 <Component {...pageProps} />

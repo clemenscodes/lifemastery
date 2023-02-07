@@ -522,21 +522,51 @@ jobs:
             - name: Install Firebase
               run: npm i -g firebase-tools
 
-            - name: Download Exported Web Apps
-              uses: actions/download-artifact@v3
-              with:
-                  name: exported
-                  path: dist/apps/clients/web
-
-            - name: Build Apps (standalone)
+            - name: Build Apps (development)
+              if: github.event.pull_request.head.repo.full_name == github.repository
               run: |
-                  npx nx run-many \
+                  NEXT_PUBLIC_PROJECT_TYPE=development npx nx run-many \
                       --target=build \
                       --no-dte \
                       --projects="web-*" \
                       --exclude=web-landing \
                       --skip-nx-cache \
                       --output-style=stream
+
+            - name: Build Apps (production)
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
+              run: |
+                  NEXT_PUBLIC_PROJECT_TYPE=production npx nx run-many \
+                      --target=build \
+                      --no-dte \
+                      --projects="web-*" \
+                      --exclude=web-landing \
+                      --skip-nx-cache \
+                      --output-style=stream
+
+            - name: Upload assets to CDN (development)
+              if: github.event.pull_request.head.repo.full_name == github.repository
+              run: |
+                  npx nx run-many \
+                      --target=cdn \
+                      --no-dte \
+                      --projects="web-*" \
+                      --skip-nx-cache \
+                      --output-style=stream \
+                      development
+
+            - name: Upload assets to CDN (production)
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
+              run: |
+                  npx nx run-many \
+                      --target=cdn \
+                      --no-dte \
+                      --projects="web-*" \
+                      --exclude=web-landing \
+                      --skip-nx-cache \
+                      --output-style=stream \
+                      --verbose \
+                      production
 
             - name: Deploy Docker Images on PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository
@@ -586,6 +616,12 @@ jobs:
                       --skip-nx-cache \
                       --output-style=stream \
                       production
+
+            - name: Download Exported Web Apps
+              uses: actions/download-artifact@v3
+              with:
+                  name: exported
+                  path: dist/apps/clients/web
 
             - name: Deploy to Firebase Hosting on PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository

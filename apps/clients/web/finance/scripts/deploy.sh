@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
 APP="finance"
@@ -58,7 +58,7 @@ cleanup() {
 }
 
 case "$1" in
-    development) deploy "$DEVELOPMENT_PROJECT" "$DEVELOPMENT_SERVICE_ACCOUNT";;
-    production) deploy "$PRODUCTION_PROJECT" "$PRODUCTION_SERVICE_ACCOUNT";;
+    development) deploy "$DEVELOPMENT_PROJECT" "$DEVELOPMENT_SERVICE_ACCOUNT" "$1";;
+    production) deploy "$PRODUCTION_PROJECT" "$PRODUCTION_SERVICE_ACCOUNT" "$1";;
     *) echo "Invalid configuration: $1" && exit 1 ;;
 esac

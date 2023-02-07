@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 APP="finance"
 APP_DIR="apps/clients/web/$APP"
 DIST="dist/$APP_DIR"
