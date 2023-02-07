@@ -19,14 +19,13 @@ const appName = 'finance';
 const prodCDN = `https://static.${appName}.${apexDomain}/public`;
 const devCDN = `https://dev.static.${appName}.${apexDomain}/public`;
 
-const isCloudRun =
-    process.env.PROJECT_TYPE === 'development' || process.env.PROJECT_TYPE === 'production';
 const isCloudRunProd = process.env.PROJECT_TYPE === 'production';
+const isCloudRunDev = process.env.PROJECT_TYPE === 'development';
+const isCloudRun = isCloudRunDev || isCloudRunProd;
+
 const cloudRunAssetPrefix = isCloudRunProd ? prodCDN : devCDN;
 
 const assetPrefix = isCloudRun ? cloudRunAssetPrefix : '';
-
-const publicURL = `${assetPrefix}`;
 
 function CustomApp({ Component, pageProps }: AppProps) {
     return (
@@ -34,7 +33,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
             <Head>
                 <title>Capital Tracker</title>
                 <meta name="description" content="Capital Tracker" />
-                <link rel="icon" href={`${publicURL}/favicon.ico`} />
+                <link rel="icon" href={`${assetPrefix}/favicon.ico`} />
             </Head>
             <main className="app">
                 <Component {...pageProps} />

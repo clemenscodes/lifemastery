@@ -6,7 +6,9 @@ FULL_BUCKET_ADDRESS="$(gsutil ls | grep cdn)"
 BUCKET="$(echo "$FULL_BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
 BUCKET_ADDRESS="gs://$BUCKET"
 PUBLIC="dist/apps/clients/web/finance/public"
+PUBLIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/public"
 STATIC="dist/apps/clients/web/finance/.next/static"
+STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static/"
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
@@ -20,15 +22,18 @@ upload_assets_to_cdn() {
 }
 
 set_project() {
+    echo "Setting project to $PROJECT_ID"
     gcloud config set project "$PROJECT_ID"
 }
 
 upload_static() {
-    gsutil -m rsync -u -r "$STATIC" "$BUCKET_ADDRESS/_next/static/"
+    echo "Uploading static assets to $STATIC_BUCKET_ADDRESS"
+    gsutil -m rsync -u -r "$STATIC" "$STATIC_BUCKET_ADDRESS"
 }
 
 upload_public() {
-    gsutil -m rsync -u -r "$PUBLIC" "$BUCKET_ADDRESS/public/"
+    echo "Uploading public assets to $PUBLIC_BUCKET_ADDRESS"
+    gsutil -m rsync -u -r "$PUBLIC" "$PUBLIC_BUCKET_ADDRESS/"
 }
 
 case "$1" in
