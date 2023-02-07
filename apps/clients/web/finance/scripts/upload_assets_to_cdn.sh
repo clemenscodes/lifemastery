@@ -13,16 +13,7 @@ fi
 
 upload_assets_to_cdn() {
     PROJECT_ID="$1"
-    set_project "$PROJECT_ID"
-    upload_static
-    upload_public
-}
-
-set_project() {
-    echo "Setting project to $PROJECT_ID"
-    gcloud config set project "$PROJECT_ID"
-    gcloud config get project
-    BUCKETS="$(gsutil ls)"
+    BUCKETS="$(gsutil ls -p "$PROJECT_ID")"
     echo "Buckets: $BUCKETS"
     FULL_BUCKET_ADDRESS="$(echo "$BUCKETS" | grep cdn)"
     echo "Full: $FULL_BUCKET_ADDRESS"
@@ -34,16 +25,18 @@ set_project() {
     echo "Public: $PUBLIC_BUCKET_ADDRESS"
     STATIC_BUCKET_ADDRESS="$BUCKET_ADDRESS/_next/static/"
     echo "Static: $STATIC_BUCKET_ADDRESS"
+    upload_static
+    upload_public
 }
 
 upload_static() {
     echo "Uploading static assets to $STATIC_BUCKET_ADDRESS"
-    gsutil -m rsync -u -r "$STATIC" "$STATIC_BUCKET_ADDRESS"
+    gsutil -m rsync -p "$PROJECT_ID" -u -r "$STATIC" "$STATIC_BUCKET_ADDRESS"
 }
 
 upload_public() {
     echo "Uploading public assets to $PUBLIC_BUCKET_ADDRESS"
-    gsutil -m rsync -u -r "$PUBLIC" "$PUBLIC_BUCKET_ADDRESS/"
+    gsutil -m rsync -p "$PROJECT_ID" -u -r "$PUBLIC" "$PUBLIC_BUCKET_ADDRESS/"
 }
 
 case "$1" in
