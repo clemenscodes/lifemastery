@@ -536,14 +536,14 @@ jobs:
             - name: Upload assets to CDN (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
               run: |
-                  npx nx run-many \
-                      --target=cdn \
-                      --no-dte \
-                      --projects="web-*" \
-                      --exclude=web-landing \
-                      --skip-nx-cache \
-                      --output-style=stream \
-                      development
+                  npx nx cdn web-finance --skip-nx-cache --output-style=stream development
+              #   npx nx run-many \
+              #       --target=cdn \
+              #       --no-dte \
+              #       --projects="web-*" \
+              #       --skip-nx-cache \
+              #       --output-style=stream \
+              #       development
 
             - name: Upload assets to CDN (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
