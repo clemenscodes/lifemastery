@@ -526,7 +526,7 @@ jobs:
             - name: Build Apps (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
               run: |
-                  PROJECT_TYPE=development npx nx run-many \
+                  NEXT_PUBLIC_PROJECT_TYPE=development npx nx run-many \
                       --target=build \
                       --no-dte \
                       --projects="web-*" \
@@ -537,7 +537,7 @@ jobs:
             - name: Build Apps (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
               run: |
-                  PROJECT_TYPE=production npx nx run-many \
+                  NEXT_PUBLIC_PROJECT_TYPE=production npx nx run-many \
                       --target=build \
                       --no-dte \
                       --projects="web-*" \

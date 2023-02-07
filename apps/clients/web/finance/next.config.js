@@ -8,13 +8,10 @@ const apexDomain = 'lifemastery.tech';
 const appName = 'finance';
 const prodCDN = `https://static.${appName}.${apexDomain}`;
 const devCDN = `https://dev.static.${appName}.${apexDomain}`;
-
-const isCloudRunProd = process.env.PROJECT_TYPE === 'production';
-const isCloudRunDev = process.env.PROJECT_TYPE === 'development';
+const isCloudRunProd = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'production';
+const isCloudRunDev = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'development';
 const isCloudRun = isCloudRunDev || isCloudRunProd;
-
 const cloudRunAssetPrefix = isCloudRunProd ? prodCDN : devCDN;
-
 const assetPrefix = isCloudRun ? cloudRunAssetPrefix : undefined;
 
 module.exports = async (phase, { defaultConfig }) => {

@@ -18,17 +18,13 @@ const apexDomain = 'lifemastery.tech';
 const appName = 'finance';
 const prodCDN = `https://static.${appName}.${apexDomain}/public`;
 const devCDN = `https://dev.static.${appName}.${apexDomain}/public`;
-
-const isCloudRunProd = process.env.PROJECT_TYPE === 'production';
-const isCloudRunDev = process.env.PROJECT_TYPE === 'development';
+const isCloudRunProd = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'production';
+const isCloudRunDev = process.env.NEXT_PUBLIC_PROJECT_TYPE === 'development';
 const isCloudRun = isCloudRunDev || isCloudRunProd;
-
 const cloudRunAssetPrefix = isCloudRunProd ? prodCDN : devCDN;
-
 const assetPrefix = isCloudRun ? cloudRunAssetPrefix : '';
 
 function CustomApp({ Component, pageProps }: AppProps) {
-    console.log(process.env.PROJECT_TYPE);
     return (
         <>
             <Head>

@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-PROJECT=$(gcloud config get project)
-PROJECT_TYPE=$(echo "$PROJECT" | awk -F '-' '{print $2}')
 BUCKET_ADDRESS="$(gsutil ls | grep -v cdn)"
 BUCKET="$(echo "$BUCKET_ADDRESS" | awk -F '/' '{print $3}')"
 CONTAINER_PAGES="$APP_HOME/dist/$APP_DIR/.next/server/pages"
 SERVER="$APP_HOME/$APP_DIR/server.js"
 MNT_DIR="$APP_HOME/gcsfuse"
-
-export PROJECT_TYPE="$PROJECT_TYPE"
 
 sync() {
     echo "Syncing newer files from $1 to $2..."
