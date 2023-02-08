@@ -1,9 +1,17 @@
-provider "google" {}
-
-module "app1" {
-  source = "./apps/clients/web/finance"
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 4.52.0"
+    }
+  }
 }
 
-module "app2" {
+module "finance" {
+  source = "./apps/clients/web/finance"
+  git_commit_sha = var.git_commit_sha
+}
+
+module "landing" {
   source = "./apps/clients/web/landing"
 }
