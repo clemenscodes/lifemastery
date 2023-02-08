@@ -164,7 +164,7 @@ It is also necessary to setup ```Google Workload Identity Federation``` to autho
 
 To set this up, run ```tools/scripts/workload_identity_provider.sh```.
 
-<img src="examples/workload_identity_federation.gif">
+<img src="docs/workload_identity_federation.gif">
 
 For this script to work, you need to have the GitHub CLI installed as well as setup an organization on GCP.
 It assumes you have ```gcloud``` installed and authorized by running ```gcloud init``` and ```gcloud auth login```.

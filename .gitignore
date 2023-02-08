@@ -1,4 +1,6 @@
-# compiled output
+node_modules
+npm-debug.log
+yarn-error.log
 dist
 tmp
 /out-tsc
@@ -8,36 +10,24 @@ tmp
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
+.terraform
+**/target
 .nx-container
 
-# dependencies
-node_modules
-
 # IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+.idea
 
 # IDE - VSCode
-.vscode
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
 /coverage
-/libpeerconnection.log
 npm-debug.log
 yarn-error.log
-testem.log
 /typings
 
 # System Files
@@ -48,10 +38,7 @@ Thumbs.db
 .next
 /target
 
-# React Native
-
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -71,7 +58,6 @@ DerivedData
 **/ios/.xcode.env.local
 
 # Android/IntelliJ
-#
 build/
 .idea
 .gradle
@@ -80,10 +66,7 @@ local.properties
 *.hprof
 
 # node.js
-#
 node_modules/
-npm-debug.log
-yarn-error.log
 
 # Bundle artifact
 *.jsbundle
@@ -91,18 +74,10 @@ yarn-error.log
 # Ruby / CocoaPods
 **/ios/Pods/
 **/vendor/bundle/
-apps/mobile-e2e/artifacts
 **/coverage
-apps/mobile-e2e/artifacts
-apps/mobile-e2e/artifacts
-apps/mobile-e2e/artifacts
-apps/mobile-e2e/artifacts
-apps/clients/mobile-e2e/artifacts
 
 # Expo
-node_modules/
 .expo/
-dist/
 npm-debug.*
 *.jks
 *.p8
@@ -112,12 +87,7 @@ npm-debug.*
 *.orig.*
 web-build/
 cache/
-apps/clients/mobile-e2e/artifacts
-apps/clients/storybook/mobile-e2e/artifacts
-apps/clients/.storybook/mobile-e2e/artifacts
-apps/clients/.storybook/web-e2e/artifacts
-apps/.storybook/mobile-e2e/artifacts
-**/target
+apps/**/artifacts
 
 # Generated Docusaurus files
 .docusaurus/
@@ -125,4 +95,3 @@ apps/.storybook/mobile-e2e/artifacts
 **/firebase-debug.log
 **/.firebase
 
-.terraform

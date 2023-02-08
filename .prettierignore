@@ -5,8 +5,10 @@
 **/.expo
 **/build
 **/target
-.yarn/
 **/storybook.requires.js
-*.md
-.docusaurus/
+**/.docusaurus/
 **/.vscode
+!vscode/extensions.json
+**/.terraform
+*.md
+.yarn/
