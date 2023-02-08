@@ -31,7 +31,7 @@ run() {
 }
 
 case "$1" in
-    development) run "$DEVELOPMENT_PROJECT" ;;
-    production) run "$PRODUCTION_PROJECT" ;;
-    *) echo "Invalid configuration: $1" && exit 1 ;;
+development) run "$DEVELOPMENT_PROJECT" ;;
+production) run "$PRODUCTION_PROJECT" ;;
+*) echo "Invalid configuration: $1" && exit 1 ;;
 esac

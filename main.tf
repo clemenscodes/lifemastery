@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+provider "google" {
+    region = var.region
+}
+
 module "finance" {
   source = "./apps/clients/web/finance"
   git_commit_sha = var.git_commit_sha

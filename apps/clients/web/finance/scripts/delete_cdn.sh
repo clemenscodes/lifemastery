@@ -77,7 +77,7 @@ delete_global_backend_bucket() {
 }
 
 case "$1" in
-    development) delete_cdn "$DEVELOPMENT_PROJECT" "$DEV.$APEX" "$1" ;;
-    production) delete_cdn "$PRODUCTION_PROJECT" "$PROD.$APEX" "$1" ;;
-    *) echo "Invalid configuration: $1" && exit 1 ;;
+development) delete_cdn "$DEVELOPMENT_PROJECT" "$DEV.$APEX" "$1" ;;
+production) delete_cdn "$PRODUCTION_PROJECT" "$PROD.$APEX" "$1" ;;
+*) echo "Invalid configuration: $1" && exit 1 ;;
 esac

@@ -40,7 +40,7 @@ upload_public() {
 }
 
 case "$1" in
-    development) upload_assets_to_cdn "$DEVELOPMENT_PROJECT" ;;
-    production) upload_assets_to_cdn "$PRODUCTION_PROJECT" ;;
-    *) echo "Invalid configuration: $1" && exit 1 ;;
+development) upload_assets_to_cdn "$DEVELOPMENT_PROJECT" ;;
+production) upload_assets_to_cdn "$PRODUCTION_PROJECT" ;;
+*) echo "Invalid configuration: $1" && exit 1 ;;
 esac

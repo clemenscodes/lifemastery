@@ -1,7 +1,7 @@
 resource "google_project" "finance-development" {
-  name       = "finance-development"
-  project_id = "finance-development-375914"
-  org_id     = "38836120782"
+  name       = var.project_name
+  project_id = var.project_id
+  org_id     = var.org_id
   folder_id  = google_folder.finance.name
 }
 
@@ -11,9 +11,8 @@ resource "google_folder" "finance" {
 }
 
 resource "google_cloud_run_v2_service" "default" {
-  name     = "finance"
-  location = "europe-west1"
-
+  name     = var.cloud_run_service_name
+  location = var.cloud_run_region
   template {
     execution_environment            = "EXECUTION_ENVIRONMENT_GEN2"
     max_instance_request_concurrency = 80
@@ -28,7 +27,6 @@ resource "google_cloud_run_v2_service" "default" {
       }
     }
   }
-
   traffic {
     percent  = 100
     revision = true
