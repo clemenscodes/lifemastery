@@ -124,3 +124,5 @@ apps/.storybook/mobile-e2e/artifacts
 .cache-loader/
 **/firebase-debug.log
 **/.firebase
+
+.terraform
