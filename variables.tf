@@ -3,8 +3,20 @@ variable "git_commit_sha" {
     type = string
 }
 
-variable "project" {
+variable "domain" {
+    default = "lifemastery.tech"
+}
+
+variable "project_id" {
     default = "landing-production-375914"
+}
+
+variable "project_name" {
+    default = "landing-production"
+}
+
+variable "folder_name" {
+    default = "landing"
 }
 
 variable "region" {

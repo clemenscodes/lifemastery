@@ -11,19 +11,31 @@ terraform {
   }
 }
 
-provider "google" {
-  region  = var.region
-  project = var.project
+data "google_organization" "org" {
+  domain = var.domain
+}
+
+resource "google_project" "default" {
+  name       = var.project_name
+  project_id = var.project_id
+  org_id     = data.google_organization.org.org_id
+}
+
+resource "google_folder" "landing" {
+  display_name = var.folder_name
+  parent       = data.google_organization.org.name
 }
 
 resource "google_service_account" "gh_actions" {
   account_id   = "gh-actions"
   display_name = "gh-actions"
+  project      = google_project.default.project_id
 }
 
 resource "google_iam_workload_identity_pool" "pool" {
   workload_identity_pool_id = "gh-workload-identity"
   display_name              = "Workload Identity Pool"
+  project                   = google_project.default.project_id
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
@@ -39,9 +51,11 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
+  project = google_project.default.project_id
 }
 
 resource "google_service_account_iam_binding" "gh_actions_policy" {
+
   service_account_id = google_service_account.gh_actions.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
