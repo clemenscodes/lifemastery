@@ -1,18 +1,19 @@
-resource "google_project" "finance-development" {
-  name       = var.project_name
-  project_id = var.project_id
-  org_id     = var.org_id
-  folder_id  = google_folder.finance.name
+resource "google_folder" "default" {
+  display_name = var.service_name
+  parent       = var.org_name
 }
 
-resource "google_folder" "finance" {
-  display_name = "finance"
-  parent       = "organizations/38836120782"
+resource "google_project" "default" {
+  name       = var.project_name
+  project_id = var.project_id
+  org_id     = var.org_name
+  folder_id  = google_folder.default.name
 }
 
 resource "google_cloud_run_v2_service" "default" {
   name     = var.cloud_run_service_name
   location = var.cloud_run_region
+  project  = google_project.default.project_id
   template {
     execution_environment            = "EXECUTION_ENVIRONMENT_GEN2"
     max_instance_request_concurrency = 80
@@ -50,6 +51,6 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 resource "google_artifact_registry_repository" "default" {
   location      = google_cloud_run_v2_service.default.location
   project       = google_cloud_run_v2_service.default.project
-  repository_id = "finance"
+  repository_id = var.service_name
   format        = "DOCKER"
 }
