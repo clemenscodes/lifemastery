@@ -16,13 +16,13 @@ data "google_organization" "org" {
 }
 
 resource "google_project" "default" {
-  name       = var.project_name
-  project_id = var.project_id
+  name       = var.default_project_name
+  project_id = var.default_project_id
   org_id     = data.google_organization.org.org_id
 }
 
 resource "google_folder" "landing" {
-  display_name = var.folder_name
+  display_name = var.default_folder_name
   parent       = data.google_organization.org.name
 }
 
@@ -59,12 +59,8 @@ resource "google_service_account_iam_binding" "gh_actions_policy" {
   ]
 }
 
-provider "github" {
-  owner = var.owner
-}
-
 data "github_repository" "repo" {
-  full_name = "${var.owner}/${var.repo}"
+  full_name = "${var.repo_owner}/${var.repo}"
 }
 
 resource "github_actions_secret" "workload_identity_provider" {
