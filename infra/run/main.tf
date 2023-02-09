@@ -1,64 +1,16 @@
-resource "google_folder" "default" {
-  display_name = var.folder_name
-  parent       = var.org_name
-}
-
-resource "google_project" "default" {
-  name       = var.project_name
-  project_id = var.project_id
-  folder_id  = google_folder.default.folder_id
-}
-
-module "artifact-registry-repository" {
-  source        = "../artifact"
-  location      = var.artifact_region
-  project       = var.project_id
-  repository_id = var.repository_id
-}
-
 resource "google_service_account" "cloud_run_service_account" {
   account_id  = var.project_name
   description = "The service account that will be used by the Cloud Run instance. Needs access to Cloud Storage"
 }
 
-resource "google_project_iam_binding" "run-admin-binding" {
-  project = var.project_id
-  role    = "roles/run.admin"
-  members = [
-    "serviceAccount:${google_service_account.cloud_run_service_account.email}",
-  ]
-}
-
-resource "google_project_iam_binding" "run-service-agent-binding" {
-  project = var.project_id
-  role    = "roles/run.serviceAgent"
-  members = [
-    "serviceAccount:${google_service_account.cloud_run_service_account.email}",
-  ]
-}
-
-resource "google_project_iam_binding" "service-account-user-binding" {
-  project = var.project_id
-  role    = "roles/iam.serviceAccountUser"
-  members = [
-    "serviceAccount:${google_service_account.cloud_run_service_account.email}",
-  ]
-}
-
-resource "google_project_iam_binding" "storage-admin-binding" {
-  project = var.project_id
-  role    = "roles/storage.admin"
-  members = [
-    "serviceAccount:${google_service_account.cloud_run_service_account.email}",
-  ]
-}
-
-resource "google_project_iam_binding" "storage-object-admin-binding" {
-  project = var.project_id
-  role    = "roles/storage.objectAdmin"
-  members = [
-    "serviceAccount:${google_service_account.cloud_run_service_account.email}",
-  ]
+module "project_iam_bindings_cloud_run_service_account" {
+  source   = "terraform-google-modules/iam/google//modules/projects_iam"
+  projects = [var.project_id]
+  mode     = "authoritative"
+  bindings = {
+    "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.cloud_run_service_account.email}"]
+    "roles/storage.admin"       = ["serviceAccount:${google_service_account.cloud_run_service_account.email}"]
+  }
 }
 
 resource "google_cloud_run_v2_service" "default" {
