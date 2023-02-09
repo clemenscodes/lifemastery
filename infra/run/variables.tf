@@ -23,6 +23,21 @@ variable "repository_id" {
   type        = string
 }
 
+variable "artifact_region" {
+  description = "The region of the artifact repository from which the image for Cloud Run will be pulled"
+  type        = string
+}
+
+variable "registry_url" {
+  description = "The URL of the registry in which the images are hosted"
+  type        = string
+}
+
+variable "image_name" {
+  description = "The name of the image that Cloud Run will pull"
+  type        = string
+}
+
 variable "cloud_run_region" {
   description = "The region in which the Cloud Run service will be created"
   type        = string
