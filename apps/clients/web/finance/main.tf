@@ -6,8 +6,8 @@ module "finance-development" {
   cloud_run_region       = var.cloud_run_region
   cloud_run_service_name = var.cloud_run_service_name
   repository_id          = var.repository_id
-  project_id             = var.project_id
-  project_name           = var.project_name
+  project_id             = var.dev_project_id
+  project_name           = var.dev_project_name
 }
 
 module "finance-production" {
@@ -18,6 +18,6 @@ module "finance-production" {
   cloud_run_region       = var.cloud_run_region
   cloud_run_service_name = var.cloud_run_service_name
   repository_id          = var.repository_id
-  project_name           = "finance-production"
-  project_id             = "finance-production-375914"
+  project_id             = var.prod_project_id
+  project_name           = var.prod_project_name
 }

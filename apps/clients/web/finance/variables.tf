@@ -12,12 +12,20 @@ variable "folder_name" {
   default = "finance"
 }
 
-variable "project_name" {
+variable "dev_project_name" {
   default = "finance-development"
 }
 
-variable "project_id" {
+variable "dev_project_id" {
   default = "finance-development-375914"
+}
+
+variable "prod_project_name" {
+  default = "finance-production"
+}
+
+variable "prod_project_id" {
+  default = "finance-production-375914"
 }
 
 variable "repository_id" {
