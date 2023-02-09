@@ -27,21 +27,18 @@ resource "google_folder" "landing" {
 }
 
 resource "google_service_account" "gh_actions" {
-  account_id   = "gh-actions"
-  display_name = "gh-actions"
-  project      = google_project.default.project_id
+  account_id = var.workload_identity_service_account_id
+  project    = google_project.default.project_id
 }
 
 resource "google_iam_workload_identity_pool" "pool" {
-  workload_identity_pool_id = "gh-workload-identity"
-  display_name              = "Workload Identity Pool"
+  workload_identity_pool_id = var.workload_identity_pool_id
   project                   = google_project.default.project_id
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
   workload_identity_pool_id          = google_iam_workload_identity_pool.pool.workload_identity_pool_id
-  workload_identity_pool_provider_id = "github"
-  display_name                       = "GitHub Identity Provider"
+  workload_identity_pool_provider_id = var.workload_identity_provider_pool_id
   attribute_mapping = {
     "google.subject"             = "assertion.sub",
     "attribute.actor"            = "assertion.actor",
@@ -55,7 +52,6 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 }
 
 resource "google_service_account_iam_binding" "gh_actions_policy" {
-
   service_account_id = google_service_account.gh_actions.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
