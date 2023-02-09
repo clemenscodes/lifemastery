@@ -1,3 +1,10 @@
+module "artifact-registry-repository" {
+  source        = "../artifact"
+  location      = google_cloud_run_v2_service.default.location
+  project       = google_cloud_run_v2_service.default.project
+  repository_id = var.repository_id
+}
+
 resource "google_folder" "default" {
   display_name = var.folder_name
   parent       = var.org_name
@@ -46,11 +53,4 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
   project     = google_cloud_run_v2_service.default.project
   service     = google_cloud_run_v2_service.default.name
   policy_data = data.google_iam_policy.noauth.policy_data
-}
-
-resource "google_artifact_registry_repository" "default" {
-  location      = google_cloud_run_v2_service.default.location
-  project       = google_cloud_run_v2_service.default.project
-  repository_id = var.repository_id
-  format        = "DOCKER"
 }
