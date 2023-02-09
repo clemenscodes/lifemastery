@@ -2,6 +2,14 @@ variable "domain" {
   default = "lifemastery.tech"
 }
 
+variable "repo_owner" {
+  default = "clemenscodes"
+}
+
+variable "repo" {
+  default = "lifemastery"
+}
+
 variable "default_region" {
   default = "europe-west3"
 }
@@ -22,20 +30,12 @@ variable "workload_identity_service_account_id" {
   default = "gh-actions"
 }
 
-variable "workload_identity_provider_pool_id" {
-  default = "github"
-}
-
 variable "workload_identity_pool_id" {
   default = "gh-workload-identity"
 }
 
-variable "repo_owner" {
-  default = "clemenscodes"
-}
-
-variable "repo" {
-  default = "lifemastery"
+variable "workload_identity_provider_pool_id" {
+  default = "github"
 }
 
 variable "git_commit_sha" {

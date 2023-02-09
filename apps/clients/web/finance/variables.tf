@@ -8,7 +8,7 @@ variable "git_commit_sha" {
   type        = string
 }
 
-variable "service_name" {
+variable "folder_name" {
   default = "finance"
 }
 
@@ -20,12 +20,8 @@ variable "project_id" {
   default = "finance-development-375914"
 }
 
-variable "subdomain" {
-  default = "dev.static.finance"
-}
-
-variable "artifact-region" {
-  default = "europe-west3"
+variable "repository_id" {
+  default = "finance"
 }
 
 variable "cloud_run_region" {
