@@ -54,18 +54,18 @@ provider "github" {
 }
 
 data "github_repository" "repo" {
-    full_name = "${var.owner}/${var.repo}"
+  full_name = "${var.owner}/${var.repo}"
 }
 
 resource "github_actions_secret" "workload_identity_provider" {
-  repository = data.github_repository.repo.full_name
-  secret_name       = "WORKLOAD_IDENTITY_PROVIDER"
+  repository      = data.github_repository.repo.full_name
+  secret_name     = "WORKLOAD_IDENTITY_PROVIDER"
   plaintext_value = google_iam_workload_identity_pool_provider.github.name
 }
 
 resource "github_actions_secret" "service_account" {
-  repository = data.github_repository.repo.full_name
-  secret_name       = "SERVICE_ACCOUNT"
+  repository      = data.github_repository.repo.full_name
+  secret_name     = "SERVICE_ACCOUNT"
   plaintext_value = google_service_account.gh_actions.email
 }
 
