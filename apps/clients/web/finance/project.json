@@ -4,7 +4,7 @@
     "sourceRoot": "apps/clients/web/finance",
     "projectType": "application",
     "namedInputs": {
-        "infraRun": ["{workspaceRoot}/tools/infra/run/*.tf"]
+        "infra": ["default", "infraRun"]
     },
     "targets": {
         "start": {
