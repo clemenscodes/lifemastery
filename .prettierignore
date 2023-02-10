@@ -12,4 +12,5 @@
 **/.terraform
 *.md
 .yarn/
-**/.tfstate**
+**/*.tfstate
+**/*.tfstate.backup
