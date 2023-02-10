@@ -6,6 +6,10 @@ variable "repo_owner" {
   default = "clemenscodes"
 }
 
+variable "billing_account" {
+  default = "01D0FC-03F662-69E484"
+}
+
 variable "repo" {
   default = "lifemastery"
 }
@@ -31,7 +35,7 @@ variable "workload_identity_service_account_id" {
 }
 
 variable "workload_identity_pool_id" {
-  default = "gh-workload-identity"
+  default = "workload-identity-pool-gh"
 }
 
 variable "workload_identity_provider_pool_id" {

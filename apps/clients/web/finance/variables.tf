@@ -26,6 +26,10 @@ variable "image_name" {
   default = "web"
 }
 
+variable "billing_account" {
+  default = "01D0FC-03F662-69E484"
+}
+
 variable "git_commit_sha" {
   description = "The git commit which will be used as the tag for the image"
   type        = string

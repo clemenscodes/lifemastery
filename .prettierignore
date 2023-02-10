@@ -12,3 +12,4 @@
 **/.terraform
 *.md
 .yarn/
+**/.tfstate**

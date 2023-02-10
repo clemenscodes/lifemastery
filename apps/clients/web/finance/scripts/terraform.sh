@@ -14,12 +14,16 @@ if [ -z "$1" ]; then
 fi
 
 tf() {
+    VARS="-var git_commit_sha=$SHA -var project_id=$1 -var project_name=$2"
     $TF init
-    $TF plan -var git_commit_sha="$SHA" -var project_id="$1" -var project_name="$2"
+    # echo "$TF plan $VARS"
+    $TF plan $VARS
+    # $TF import
+    $TF apply $VARS
 }
 
 case "$1" in
-development) tf "$DEV_PROJECT_ID" "$DEV_PROJECT_NAME" "$1" ;;
-production) tf "$PROD_PROJECT_ID" "$PROD_PROJECT_NAME" "$1" ;;
+development) tf "$DEV_PROJECT_ID" "$DEV_PROJECT_NAME" ;;
+production) tf "$PROD_PROJECT_ID" "$PROD_PROJECT_NAME" ;;
 *) echo "Invalid configuration: $1" && exit 1 ;;
 esac
