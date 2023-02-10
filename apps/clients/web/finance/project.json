@@ -116,6 +116,6 @@
             }
         }
     },
-    "implicitDependencies": ["infra-run"],
+    "implicitDependencies": ["infra-run", "infra-artifact"],
     "tags": []
 }
