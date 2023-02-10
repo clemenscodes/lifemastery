@@ -13,6 +13,8 @@ module "project_iam_bindings_cloud_run_service_account" {
   }
 }
 
+
+
 resource "google_cloud_run_v2_service" "default" {
   name     = var.cloud_run_service_name
   location = var.cloud_run_region
