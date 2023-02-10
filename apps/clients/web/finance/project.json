@@ -107,7 +107,7 @@
             "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
         },
         "terraform": {
-            "inputs": ["{workspaceRoot}/infra/run/*.tf"],
+            "inputs": ["infraRun"],
             "command": "apps/clients/web/finance/scripts/terraform.sh"
         }
     },
