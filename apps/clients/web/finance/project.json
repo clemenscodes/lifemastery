@@ -105,6 +105,9 @@
         },
         "cdn": {
             "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
+        },
+        "terraform": {
+            "command": "apps/clients/web/finance/scripts/terraform.sh"
         }
     },
     "tags": []

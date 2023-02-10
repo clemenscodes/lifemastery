@@ -74,25 +74,3 @@ resource "github_actions_secret" "service_account" {
   secret_name     = "SERVICE_ACCOUNT"
   plaintext_value = google_service_account.gh_actions.email
 }
-
-module "finance-development" {
-  source                         = "./apps/clients/web/finance"
-  git_commit_sha                 = var.git_commit_sha
-  org_name                       = data.google_organization.org.name
-  workflow_service_account_email = google_service_account.gh_actions.email
-  project_name                   = "finance-development"
-  project_id                     = "finance-development-375914"
-}
-
-module "finance-production" {
-  source                         = "./apps/clients/web/finance"
-  git_commit_sha                 = var.git_commit_sha
-  org_name                       = data.google_organization.org.name
-  workflow_service_account_email = google_service_account.gh_actions.email
-  project_name                   = "finance-production"
-  project_id                     = "finance-production-375914"
-}
-
-module "landing" {
-  source = "./apps/clients/web/landing"
-}

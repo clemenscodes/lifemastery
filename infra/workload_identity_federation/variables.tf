@@ -37,8 +37,3 @@ variable "workload_identity_pool_id" {
 variable "workload_identity_provider_pool_id" {
   default = "github"
 }
-
-variable "git_commit_sha" {
-  description = "The git commit which will be used as the tag for the image"
-  type        = string
-}
