@@ -100,11 +100,11 @@
         "kubernetes": {
             "command": "apps/clients/web/finance/scripts/kubernetes.sh"
         },
-        "deploy": {
-            "command": "apps/clients/web/finance/scripts/deploy.sh"
-        },
         "cdn": {
             "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
+        },
+        "deploy": {
+            "command": "apps/clients/web/finance/scripts/deploy.sh"
         },
         "terraform": {
             "inputs": ["default", "{workspaceRoot}/infra/run/*.tf"],
