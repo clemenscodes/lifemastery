@@ -37,8 +37,8 @@ resource "google_cloud_run_v2_service" "default" {
     }
   }
   traffic {
-    percent  = 100
     revision = true
+    percent  = 100
   }
 }
 
