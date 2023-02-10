@@ -1,20 +1,42 @@
-variable "dev_project_name" {
-  default = "finance-development"
+variable "folder_name" {
+  default = "finance"
 }
 
-variable "dev_project_id" {
-  default = "finance-development-375914"
+variable "repository_id" {
+  default = "finance"
 }
 
-variable "prod_project_name" {
-  default = "finance-production"
+variable "cloud_run_region" {
+  default = "europe-west1"
 }
 
-variable "prod_project_id" {
-  default = "finance-production-375914"
+variable "cloud_run_service_name" {
+  default = "finance"
+}
+
+variable "artifact_region" {
+  default = "europe-west3"
+}
+
+variable "registry_url" {
+  default = "docker.pkg.dev"
+}
+
+variable "image_name" {
+  default = "web"
 }
 
 variable "git_commit_sha" {
   description = "The git commit which will be used as the tag for the image"
+  type        = string
+}
+
+variable "project_name" {
+  description = "The name of the project"
+  type        = string
+}
+
+variable "project_id" {
+  description = "The id of the project"
   type        = string
 }

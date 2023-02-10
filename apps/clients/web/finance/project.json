@@ -111,7 +111,10 @@
             "defaultConfiguration": "development",
             "configurations": {
                 "development": {
-                    "command": "apps/clients/web/finance/scripts/terraform.sh"
+                    "command": "apps/clients/web/finance/scripts/terraform.sh development"
+                },
+                "production": {
+                    "command": "apps/clients/web/finance/scripts/terraform.sh production"
                 }
             }
         }
