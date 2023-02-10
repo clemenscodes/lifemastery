@@ -26,14 +26,14 @@ module "project_iam_bindings" {
 }
 
 module "artifact-registry-repository" {
-  source        = "../../../../../infra/artifact"
+  source        = "../../../../../tools/infra/artifact"
   location      = var.artifact_region
   project       = var.project_id
   repository_id = var.repository_id
 }
 
 module "run" {
-  source                 = "../../../../../infra/run"
+  source                 = "../../../../../tools/infra/run"
   project_id             = var.project_id
   project_name           = var.project_name
   folder_name            = var.folder_name

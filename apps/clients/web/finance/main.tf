@@ -1,5 +1,5 @@
 module "workload_identity_federation" {
-  source = "../../../../infra/workload_identity_federation"
+  source = "../../../../tools/infra/workload_identity_federation"
 }
 
 module "finance-development" {

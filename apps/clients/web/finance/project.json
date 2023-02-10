@@ -3,6 +3,9 @@
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/clients/web/finance",
     "projectType": "application",
+    "namedInputs": {
+        "infraRun": ["{workspaceRoot}/tools/infra/run/*.tf"]
+    },
     "targets": {
         "start": {
             "dependsOn": ["build"],
