@@ -3,9 +3,6 @@
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/clients/web/finance",
     "projectType": "application",
-    "namedInputs": {
-        "infra": ["default", "infraRun"]
-    },
     "targets": {
         "start": {
             "dependsOn": ["build"],
@@ -112,7 +109,7 @@
         "terraform": {
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
-            "inputs": ["infra"],
+            "inputs": ["default", "infraRun"],
             "configurations": {
                 "development": {
                     "command": "apps/clients/web/finance/scripts/terraform.sh"
