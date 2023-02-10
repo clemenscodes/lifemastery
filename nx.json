@@ -31,6 +31,7 @@
             "!{projectRoot}/.eslintrc.json"
         ],
         "infraRun": ["{workspaceRoot}/tools/infra/run/*.tf"],
+        "infraArtifacts": ["{workspaceRoot}/tools/infra/artifact/*.tf"],
         "sharedGlobals": ["{workspaceRoot}/babel.config.json"],
         "desktopExported": ["{workspaceRoot}/dist/apps/clients/web/**/exported"],
         "grpcModels": ["{workspaceRoot}/tools/models/**/*.proto"]
