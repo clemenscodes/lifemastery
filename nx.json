@@ -30,9 +30,7 @@
             "!{projectRoot}/jest.config.[jt]s",
             "!{projectRoot}/.eslintrc.json"
         ],
-        "sharedGlobals": ["{workspaceRoot}/babel.config.json"],
-        "desktopExported": ["{workspaceRoot}/dist/apps/clients/web/**/exported"],
-        "grpcModels": ["{workspaceRoot}/tools/models/**/*.proto"]
+        "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
     "targetDefaults": {
         "build": {
