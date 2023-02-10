@@ -13,6 +13,8 @@ tmp
 .terraform
 **/target
 .nx-container
+**/terraform.tfstate
+**/.terraform.tfstate.lock.info
 
 # IDEs and editors
 .idea
