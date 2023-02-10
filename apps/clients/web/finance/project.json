@@ -109,7 +109,6 @@
         "terraform": {
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
-            "inputs": ["infraRun"],
             "configurations": {
                 "development": {
                     "command": "apps/clients/web/finance/scripts/terraform.sh"
@@ -117,5 +116,6 @@
             }
         }
     },
+    "implicitDependencies": ["infra-run"],
     "tags": []
 }
