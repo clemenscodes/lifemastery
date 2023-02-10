@@ -18,8 +18,7 @@ tf() {
     $TF init
     # echo "$TF plan $VARS"
     $TF plan $VARS
-    # $TF import
-    $TF apply $VARS
+    $TF apply $VARS -auto-approve
 }
 
 case "$1" in
