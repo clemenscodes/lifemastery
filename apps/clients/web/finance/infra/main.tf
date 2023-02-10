@@ -9,7 +9,7 @@ resource "google_project" "default" {
   folder_id  = google_folder.default.folder_id
 }
 
-module "project_iam_bindings_workflow_federation_service_account" {
+module "project_iam_bindings" {
   source   = "terraform-google-modules/iam/google//modules/projects_iam"
   projects = [var.project_id]
   mode     = "authoritative"
