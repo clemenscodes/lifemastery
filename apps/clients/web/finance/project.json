@@ -107,8 +107,13 @@
             "command": "apps/clients/web/finance/scripts/deploy.sh"
         },
         "terraform": {
-            "inputs": ["default", "{workspaceRoot}/infra/run/*.tf"],
-            "command": "apps/clients/web/finance/scripts/terraform.sh"
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "apps/clients/web/finance/scripts/terraform.sh"
+                }
+            }
         }
     },
     "tags": []
