@@ -1,3 +1,11 @@
+variable "project_id" {
+  default = "finance-development-375914"
+}
+
+variable "state_bucket" {
+  default = "finance-development-state"
+}
+
 variable "folder_name" {
   default = "finance"
 }

@@ -8,5 +8,7 @@ terraform {
 }
 
 module "finance-development" {
-  source = "../"
+  source       = "../"
+  project_id   = var.project_id
+  state_bucket = var.state_bucket
 }

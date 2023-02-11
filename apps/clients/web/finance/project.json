@@ -97,9 +97,6 @@
             "dependsOn": ["docker"],
             "command": "apps/clients/web/finance/scripts/docker.sh"
         },
-        "kubernetes": {
-            "command": "apps/clients/web/finance/scripts/kubernetes.sh"
-        },
         "cdn": {
             "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
         },
@@ -119,6 +116,6 @@
             }
         }
     },
-    "implicitDependencies": ["infra-run", "infra-artifact"],
+    "implicitDependencies": ["infra-run", "infra-artifact", "infra-bucket"],
     "tags": []
 }
