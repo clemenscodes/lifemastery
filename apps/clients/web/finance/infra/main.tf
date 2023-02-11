@@ -2,6 +2,36 @@ module "workload_identity_federation" {
   source = "../../../../../libs/infra/workload_identity_federation"
 }
 
+# resource "google_storage_bucket" "bucket" {
+#   name                        = var.state_bucket
+#   location                    = "EU"
+#   force_destroy               = false
+#   uniform_bucket_level_access = true
+#   project                     = var.project_id
+#   storage_class               = "STANDARD"
+#   versioning {
+#     enabled = true
+#   }
+#   lifecycle {
+#     prevent_destroy = true
+#   }
+# }
+
+# resource "google_service_account" "bucket" {
+#   account_id = "bucket"
+#   project    = var.project_id
+# }
+
+# module "project_iam_bindings" {
+#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
+#   projects = [var.project_id]
+#   mode     = "authoritative"
+#   bindings = {
+#     "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.bucket.email}"]
+#     "roles/storage.admin" = ["serviceAccount:${google_service_account.bucket.email}"]
+#   }
+# }
+
 # resource "google_folder" "default" {
 #   display_name = var.folder_name
 #   parent       = module.workload_identity_federation.org_name
