@@ -7,8 +7,8 @@ terraform {
   }
 }
 
-module "workload_identity_federation" {
-  source = "../../../../../../libs/infra/workload_identity_federation"
+module "finance-production" {
+  source = "../"
 }
 
 # resource "google_folder" "default" {
