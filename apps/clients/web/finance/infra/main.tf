@@ -2,31 +2,10 @@ module "workload_identity_federation" {
   source = "../../../../../libs/infra/workload_identity_federation"
 }
 
-module "state_bucket" {
-  source       = "../../../../../libs/infra/bucket"
-  project_id   = var.project_id
-  state_bucket = var.state_bucket
+resource "google_folder" "default" {
+  display_name = var.folder_name
+  parent       = module.workload_identity_federation.org_name
 }
-
-# resource "google_service_account" "bucket" {
-#   account_id = "bucket"
-#   project    = var.project_id
-# }
-
-# module "project_iam_bindings" {
-#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
-#   projects = [var.project_id]
-#   mode     = "authoritative"
-#   bindings = {
-#     "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.bucket.email}"]
-#     "roles/storage.admin" = ["serviceAccount:${google_service_account.bucket.email}"]
-#   }
-# }
-
-# resource "google_folder" "default" {
-#   display_name = var.folder_name
-#   parent       = module.workload_identity_federation.org_name
-# }
 
 # resource "google_project" "default" {
 #   name            = var.project_name
@@ -50,6 +29,28 @@ module "state_bucket" {
 #     "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
 #   }
 # }
+
+module "state_bucket" {
+  source       = "../../../../../libs/infra/bucket"
+  project_id   = var.project_id
+  state_bucket = var.state_bucket
+}
+
+# resource "google_service_account" "bucket" {
+#   account_id = "bucket"
+#   project    = var.project_id
+# }
+
+# module "project_iam_bindings" {
+#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
+#   projects = [var.project_id]
+#   mode     = "authoritative"
+#   bindings = {
+#     "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.bucket.email}"]
+#     "roles/storage.admin" = ["serviceAccount:${google_service_account.bucket.email}"]
+#   }
+# }
+
 
 # module "artifact-registry-repository" {
 #   source        = "../../../../../libs/infra/artifact"
