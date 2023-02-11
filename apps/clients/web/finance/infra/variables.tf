@@ -34,13 +34,3 @@ variable "git_commit_sha" {
   description = "The git commit which will be used as the tag for the image"
   type        = string
 }
-
-variable "project_name" {
-  description = "The name of the project"
-  type        = string
-}
-
-variable "project_id" {
-  description = "The id of the project"
-  type        = string
-}

@@ -1,10 +1,11 @@
 #!/bin/sh
-
+set -e
 APP="finance"
 APP_DIR="apps/clients/web/$APP"
-TF="terraform -chdir=$APP_DIR"
+TF_DIR="$APP_DIR/infra"
+TF="terraform -chdir=$TF_DIR"
 SHA="$(git rev-parse --short HEAD)"
-PLAN="plan.out"
+PLAN="plan.tfplan"
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
@@ -12,10 +13,11 @@ fi
 
 tf() {
     $TF workspace select "$1"
+    # $TF init -reconfigure -backend-config="bucket=finance-$1-state"
     $TF init
-    $TF plan -var-file="$1".tfvars -var git_commit_sha="$SHA" -out=$PLAN
-    $TF apply $PLAN
-    rm "$APP_DIR/$PLAN"
+    $TF plan -var git_commit_sha="$SHA" -out=$PLAN
+    # $TF apply $PLAN
+    rm "$TF_DIR/$PLAN"
 }
 
 case "$1" in
