@@ -4,24 +4,22 @@ APP="finance"
 APP_DIR="apps/clients/web/$APP"
 TF="terraform -chdir=$APP_DIR"
 SHA="$(git rev-parse --short HEAD)"
-DEV_PROJECT_NAME="finance-development"
-DEV_PROJECT_ID="finance-development-375914"
-PROD_PROJECT_NAME="finance-production"
-PROD_PROJECT_ID="finance-production-375914"
+PLAN="plan.out"
 
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
 fi
 
 tf() {
-    $TF workspace select "$3"
+    $TF workspace select "$1"
     $TF init
-    $TF plan -var git_commit_sha="$SHA" -var project_id="$1" -var project_name="$2"
-    $TF apply -var=git_commit_sha="$SHA" -var project_id="$1" -var project_name="$2" -auto-approve
+    $TF plan -var-file="$1".tfvars -var git_commit_sha="$SHA" -out=$PLAN
+    $TF apply $PLAN
+    rm "$APP_DIR/$PLAN"
 }
 
 case "$1" in
-development) tf "$DEV_PROJECT_ID" "$DEV_PROJECT_NAME" "$1";;
-production) tf "$PROD_PROJECT_ID" "$PROD_PROJECT_NAME" "$1";;
+development) tf "$1" ;;
+production) tf "$1" ;;
 *) echo "Invalid configuration: $1" && exit 1 ;;
 esac

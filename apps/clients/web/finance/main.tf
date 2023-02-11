@@ -1,34 +1,43 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 4.52.0"
+    }
+  }
+}
+
 module "workload_identity_federation" {
   source = "../../../../libs/infra/workload_identity_federation"
 }
 
-resource "google_folder" "default" {
-  display_name = var.folder_name
-  parent       = module.workload_identity_federation.org_name
-}
+# resource "google_folder" "default" {
+#   display_name = var.folder_name
+#   parent       = module.workload_identity_federation.org_name
+# }
 
-resource "google_project" "default" {
-  name            = var.project_name
-  project_id      = var.project_id
-  billing_account = var.billing_account
-  folder_id       = google_folder.default.folder_id
-}
+# resource "google_project" "default" {
+#   name            = var.project_name
+#   project_id      = var.project_id
+#   billing_account = var.billing_account
+#   folder_id       = google_folder.default.folder_id
+# }
 
-module "project_iam_bindings" {
-  source   = "terraform-google-modules/iam/google//modules/projects_iam"
-  projects = [var.project_id]
-  mode     = "authoritative"
-  bindings = {
-    "roles/storage.objectAdmin"            = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/storage.admin"                  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/artifactregistry.admin"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/artifactregistry.serviceAgent"  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/run.admin"                      = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/run.serviceAgent"               = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/iam.serviceAccountTokenCreator" = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-    "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-  }
-}
+# module "project_iam_bindings" {
+#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
+#   projects = [var.project_id]
+#   mode     = "authoritative"
+#   bindings = {
+#     "roles/storage.objectAdmin"            = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/storage.admin"                  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/artifactregistry.admin"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/artifactregistry.serviceAgent"  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/run.admin"                      = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/run.serviceAgent"               = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/iam.serviceAccountTokenCreator" = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#     "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+#   }
+# }
 
 # module "artifact-registry-repository" {
 #   source        = "../../../../libs/infra/artifact"

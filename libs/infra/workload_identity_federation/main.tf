@@ -37,12 +37,16 @@ resource "google_service_account" "gh_actions" {
 
 resource "google_iam_workload_identity_pool" "pool" {
   workload_identity_pool_id = var.workload_identity_pool_id
-  project                   = google_project.default.project_id
+  disabled                  = false
+  project                   = google_project.default.number
   display_name              = "Workload Identity Pool"
+  timeouts {}
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
   workload_identity_pool_id          = google_iam_workload_identity_pool.pool.workload_identity_pool_id
+  disabled                           = false
+  project                            = google_project.default.number
   workload_identity_pool_provider_id = var.workload_identity_provider_pool_id
   attribute_mapping = {
     "google.subject"             = "assertion.sub",
@@ -51,12 +55,14 @@ resource "google_iam_workload_identity_pool_provider" "github" {
     "attribute.repository_owner" = "assertion.repository_owner"
   }
   oidc {
-    issuer_uri = "https://token.actions.githubusercontent.com"
+    allowed_audiences = []
+    issuer_uri        = "https://token.actions.githubusercontent.com"
   }
-  project = google_project.default.project_id
+  timeouts {}
 }
 
 resource "google_service_account_iam_binding" "gh_actions_policy" {
+#   service_account_id = "projects/${google_project.default.project_id}/serviceAccounts/${google_service_account.gh_actions.unique_id}"
   service_account_id = google_service_account.gh_actions.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
