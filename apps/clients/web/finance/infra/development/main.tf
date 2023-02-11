@@ -8,7 +8,7 @@ terraform {
 }
 
 module "workload_identity_federation" {
-  source = "../../../../../libs/infra/workload_identity_federation"
+  source = "../../../../../../libs/infra/workload_identity_federation"
 }
 
 # resource "google_folder" "default" {
@@ -40,14 +40,14 @@ module "workload_identity_federation" {
 # }
 
 # module "artifact-registry-repository" {
-#   source        = "../../../../../libs/infra/artifact"
+#   source        = "../../../../../../libs/infra/artifact"
 #   location      = var.artifact_region
 #   project       = var.project_id
 #   repository_id = var.repository_id
 # }
 
 # module "run" {
-#   source                 = "../../../../../libs/infra/run"
+#   source                 = "../../../../../../libs/infra/run"
 #   project_id             = var.project_id
 #   project_name           = var.project_name
 #   folder_name            = var.folder_name
