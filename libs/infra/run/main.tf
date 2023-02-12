@@ -4,13 +4,16 @@ resource "google_service_account" "cloud_run_service_account" {
   description = "The service account that will be used by the Cloud Run instance. Needs access to Cloud Storage"
 }
 
-module "project_iam_bindings_cloud_run_service_account" {
-  source   = "terraform-google-modules/iam/google//modules/projects_iam"
-  projects = [var.project_id]
-  bindings = {
-    "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.cloud_run_service_account.email}"]
-    "roles/storage.admin"       = ["serviceAccount:${google_service_account.cloud_run_service_account.email}"]
-  }
+resource "google_project_iam_member" "storage_object_admin" {
+  project = var.project_id
+  role    = "roles/storage.objectAdmin"
+  member  = "serviceAccount:${google_service_account.cloud_run_service_account.email}"
+}
+
+resource "google_project_iam_member" "storage_admin" {
+  project = var.project_id
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.cloud_run_service_account.email}"
 }
 
 resource "google_cloud_run_v2_service" "default" {
