@@ -40,6 +40,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "project_name" {
+  description = "The name of the project in which the buckets will be created"
+  type        = string
+}
+
 # variable "git_commit_sha" {
 #   description = "The git commit which will be used as the tag for the image"
 #   type        = string

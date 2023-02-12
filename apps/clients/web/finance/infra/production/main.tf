@@ -9,6 +9,7 @@ terraform {
 
 module "finance-production" {
   source       = "../"
+  project_name = var.project_name
   project_id   = var.project_id
   state_bucket = var.state_bucket
 }

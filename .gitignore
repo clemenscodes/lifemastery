@@ -13,6 +13,8 @@ tmp
 .terraform
 **/target
 .nx-container
+# **/terraform.tfstate
+# **/terraform.tfstate.backup
 
 # IDEs and editors
 .idea
@@ -94,4 +96,3 @@ apps/**/artifacts
 .cache-loader/
 **/firebase-debug.log
 **/.firebase
-

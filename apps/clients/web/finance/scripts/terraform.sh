@@ -2,7 +2,6 @@
 set -e
 APP="finance"
 APP_DIR="apps/clients/web/$APP"
-SHA="$(git rev-parse --short HEAD)"
 PLAN="plan.tfplan"
 
 if [ -z "$1" ]; then
@@ -12,10 +11,10 @@ fi
 tf() {
     TF_DIR="$APP_DIR/infra/$1"
     TF="terraform -chdir=$TF_DIR"
+    # SHA="$(git rev-parse --short HEAD)"
     $TF init
-    $TF plan -var git_commit_sha="$SHA" -out="$PLAN"
-    $TF show
-    # $TF apply $PLAN
+    $TF plan -out="$PLAN" # -var git_commit_sha="$SHA"
+    $TF apply $PLAN
     rm "$TF_DIR/$PLAN"
 }
 

@@ -7,12 +7,18 @@ resource "google_folder" "default" {
   parent       = module.workload_identity_federation.org_name
 }
 
-# resource "google_project" "default" {
-#   name            = var.project_name
-#   project_id      = var.project_id
-#   billing_account = var.billing_account
-#   folder_id       = google_folder.default.folder_id
-# }
+resource "google_project" "default" {
+  name            = var.project_name
+  project_id      = var.project_id
+  billing_account = var.billing_account
+  folder_id       = google_folder.default.folder_id
+}
+
+module "state_bucket" {
+  source       = "../../../../../libs/infra/bucket"
+  project_id   = var.project_id
+  state_bucket = var.state_bucket
+}
 
 # module "project_iam_bindings" {
 #   source   = "terraform-google-modules/iam/google//modules/projects_iam"
@@ -29,12 +35,6 @@ resource "google_folder" "default" {
 #     "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
 #   }
 # }
-
-module "state_bucket" {
-  source       = "../../../../../libs/infra/bucket"
-  project_id   = var.project_id
-  state_bucket = var.state_bucket
-}
 
 # resource "google_service_account" "bucket" {
 #   account_id = "bucket"
