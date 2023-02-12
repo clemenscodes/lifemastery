@@ -29,6 +29,9 @@ tf() {
         $TF apply -input=false -auto-approve -lock=false -lock-timeout=60s $PLAN
         echo "Pushing image to Cloud Run"
         docker push "$TAGGED_IMAGE"
+        $TF init
+        $TF plan -out="$PLAN" -input=false -lock-timeout=60s -lock=false -var=git_commit_sha="$SHA"
+        $TF apply -input=false -auto-approve -lock=false -lock-timeout=60s $PLAN
         sed -i 's/local/gcs/g' "$BACKEND"
         $TF plan -out="$PLAN" -input=false -lock-timeout=60s -var=git_commit_sha="$SHA"
         $TF apply -input=false -auto-approve -lock-timeout=60s $PLAN
@@ -40,6 +43,7 @@ tf() {
         $TF apply -input=false -auto-approve -lock=false -lock-timeout=60s $PLAN
         echo "Pushing image to Cloud Run"
         docker push "$TAGGED_IMAGE"
+        $TF init -backend-config="bucket=$APP-$1-state"
         $TF plan -out="$PLAN" -input=false -lock-timeout=60s -lock=false -var=git_commit_sha="$SHA"
         $TF apply -input=false -auto-approve -lock=false -lock-timeout=60s $PLAN
     fi
