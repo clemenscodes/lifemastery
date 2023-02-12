@@ -23,7 +23,6 @@ module "state_bucket" {
 module "project_iam_bindings" {
   source   = "terraform-google-modules/iam/google//modules/projects_iam"
   projects = [var.project_id]
-  mode     = "authoritative"
   bindings = {
     "roles/storage.objectAdmin"            = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
     "roles/storage.admin"                  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
