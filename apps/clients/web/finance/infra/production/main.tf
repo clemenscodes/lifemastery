@@ -7,7 +7,7 @@ terraform {
   }
 }
 
-module "finance-production" {
+module "finance" {
   source       = "../"
   project_name = var.project_name
   project_id   = var.project_id

@@ -15,6 +15,8 @@ tf() {
     $TF init
     $TF plan -out="$PLAN" # -var git_commit_sha="$SHA"
     $TF apply $PLAN
+    BACKEND_BUCKET_SERVICE_ACCOUNT=$($TF output bucket_service_account)
+    echo "Bucket service account: $BACKEND_BUCKET_SERVICE_ACCOUNT"
     rm "$TF_DIR/$PLAN"
 }
 

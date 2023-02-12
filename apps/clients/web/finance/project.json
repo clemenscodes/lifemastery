@@ -103,7 +103,7 @@
         "deploy": {
             "command": "apps/clients/web/finance/scripts/deploy.sh"
         },
-        "terraform": {
+        "tf": {
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
             "configurations": {

@@ -21,3 +21,18 @@ resource "google_storage_bucket" "state_bucket" {
     prevent_destroy = true
   }
 }
+
+resource "google_service_account" "bucket" {
+  account_id = "bucket"
+  project    = var.project_id
+}
+
+module "project_iam_bindings" {
+  source   = "terraform-google-modules/iam/google//modules/projects_iam"
+  projects = [var.project_id]
+  mode     = "authoritative"
+  bindings = {
+    "roles/storage.objectAdmin" = ["serviceAccount:${google_service_account.bucket.email}"]
+    "roles/storage.admin" = ["serviceAccount:${google_service_account.bucket.email}"]
+  }
+}
