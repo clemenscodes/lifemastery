@@ -10,7 +10,7 @@ variable "state_bucket" {
   default = "finance-production-state"
 }
 
-# variable "git_commit_sha" {
-#   description = "The git commit which will be used as the tag for the image"
-#   type        = string
-# }
+variable "git_commit_sha" {
+  description = "The git commit which will be used as the tag for the image"
+  type        = string
+}

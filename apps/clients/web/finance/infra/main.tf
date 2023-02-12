@@ -42,18 +42,3 @@ module "artifact-registry-repository" {
   project       = var.project_id
   repository_id = var.repository_id
 }
-
-# module "run" {
-#   source                 = "../../../../../libs/infra/run"
-#   project_id             = var.project_id
-#   project_name           = var.project_name
-#   folder_name            = var.folder_name
-#   cloud_run_region       = var.cloud_run_region
-#   cloud_run_service_name = var.cloud_run_service_name
-#   repository_id          = var.repository_id
-#   artifact_region        = var.artifact_region
-#   registry_url           = var.registry_url
-#   image_name             = var.image_name
-#   git_commit_sha         = var.git_commit_sha
-#   org_name               = module.workload_identity_federation.org_name
-# }

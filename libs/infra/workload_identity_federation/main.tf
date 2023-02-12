@@ -62,7 +62,6 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 }
 
 resource "google_service_account_iam_binding" "gh_actions_policy" {
-#   service_account_id = "projects/${google_project.default.project_id}/serviceAccounts/${google_service_account.gh_actions.unique_id}"
   service_account_id = google_service_account.gh_actions.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
