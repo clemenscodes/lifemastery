@@ -20,28 +20,28 @@ module "state_bucket" {
   state_bucket = var.state_bucket
 }
 
-# module "project_iam_bindings" {
-#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
-#   projects = [var.project_id]
-#   mode     = "authoritative"
-#   bindings = {
-#     "roles/storage.objectAdmin"            = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/storage.admin"                  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/artifactregistry.admin"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/artifactregistry.serviceAgent"  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/run.admin"                      = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/run.serviceAgent"               = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/iam.serviceAccountTokenCreator" = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#     "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
-#   }
-# }
+module "project_iam_bindings" {
+  source   = "terraform-google-modules/iam/google//modules/projects_iam"
+  projects = [var.project_id]
+  mode     = "authoritative"
+  bindings = {
+    "roles/storage.objectAdmin"            = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/storage.admin"                  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/artifactregistry.admin"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/artifactregistry.serviceAgent"  = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/run.admin"                      = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/run.serviceAgent"               = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/iam.serviceAccountTokenCreator" = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+    "roles/iam.serviceAccountUser"         = ["serviceAccount:${module.workload_identity_federation.service_account_email}"]
+  }
+}
 
-# module "artifact-registry-repository" {
-#   source        = "../../../../../libs/infra/artifact"
-#   location      = var.artifact_region
-#   project       = var.project_id
-#   repository_id = var.repository_id
-# }
+module "artifact-registry-repository" {
+  source        = "../../../../../libs/infra/artifact"
+  location      = var.artifact_region
+  project       = var.project_id
+  repository_id = var.repository_id
+}
 
 # module "run" {
 #   source                 = "../../../../../libs/infra/run"
