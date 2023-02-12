@@ -15,7 +15,7 @@ resource "google_project" "default" {
 }
 
 module "state_bucket" {
-  source       = "../../../../../libs/infra/bucket"
+  source       = "../../../../../libs/infra/bucket/state_bucket"
   project_id   = var.project_id
   state_bucket = var.state_bucket
 }

@@ -12,18 +12,19 @@ tf() {
     TF_DIR="$APP_DIR/infra/$1"
     TF="terraform -chdir=$TF_DIR"
     BACKEND="$TF_DIR/backend.tf"
+    export TF_IN_AUTOMATION=true
     # SHA="$(git rev-parse --short HEAD)"
     if grep -q "local" "$BACKEND"; then
         $TF init
-        $TF plan -out="$PLAN" # -var git_commit_sha="$SHA"
-        $TF apply $PLAN
+        $TF plan -out="$PLAN" -input=false -lock-timeout=60s # -var git_commit_sha="$SHA"
+        $TF apply -input=false -auto-approve -lock-timeout=60s $PLAN
         sed -i 's/local/gcs/g' "$BACKEND"
         echo "Migrating state"
         echo "yes" | $TF init -migrate-state -backend-config="bucket=$APP-$1-state"
     else
         $TF init -backend-config="bucket=$APP-$1-state"
-        $TF plan -out="$PLAN" # -var git_commit_sha="$SHA"
-        $TF apply $PLAN
+        $TF plan -out="$PLAN" -input=false -lock-timeout=60s # -var git_commit_sha="$SHA"
+        $TF apply -input=false -auto-approve -lock-timeout=60s $PLAN
     fi
     rm "$TF_DIR/$PLAN"
 }
