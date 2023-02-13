@@ -3,7 +3,7 @@ variable "folder_name" {
 }
 
 variable "repository_id" {
-  default = "finance"
+  default = "docker"
 }
 
 variable "cloud_run_region" {
@@ -15,7 +15,7 @@ variable "cloud_run_service_name" {
 }
 
 variable "artifact_region" {
-  default = "europe-west3"
+  default = "europe-west1"
 }
 
 variable "registry_url" {

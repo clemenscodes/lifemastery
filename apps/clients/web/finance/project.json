@@ -62,7 +62,7 @@
                 "development": {
                     "metadata": {
                         "images": [
-                            "europe-west3-docker.pkg.dev/finance-development-375914/finance/web"
+                            "europe-west1-docker.pkg.dev/finance-development-375914/docker/web"
                         ],
                         "tags": ["type=schedule", "type=sha"]
                     }
@@ -70,7 +70,7 @@
                 "production": {
                     "metadata": {
                         "images": [
-                            "europe-west3-docker.pkg.dev/finance-production-375914/finance/web"
+                            "europe-west1-docker.pkg.dev/finance-production-375914/docker/web"
                         ],
                         "tags": ["type=schedule", "type=sha"]
                     }

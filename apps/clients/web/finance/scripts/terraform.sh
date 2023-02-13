@@ -3,11 +3,12 @@
 set -e
 
 APP="finance"
+REPO_NAME="docker"
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
 APP_DIR="apps/clients/web/$APP"
 PLAN="plan.tfplan"
-ARTIFACT_REGION="europe-west3"
+ARTIFACT_REGION="europe-west1"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
 PURPLE="\\033[0;35m"
@@ -29,7 +30,7 @@ tf() {
 
     SHA="$(git rev-parse --short HEAD)"
 
-    REPO="$ARTIFACT_REGION-$REGISTRY/$PROJECT/$APP"
+    REPO="$ARTIFACT_REGION-$REGISTRY/$PROJECT/$REPO_NAME"
     IMAGE="$REPO/$IMAGE_NAME"
     TAGGED_IMAGE="$IMAGE:$SHA"
 

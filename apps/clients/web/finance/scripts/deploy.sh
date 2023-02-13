@@ -3,10 +3,11 @@ set -e
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
 APP="finance"
+REPO_NAME="docker"
 DEVELOPMENT_SERVICE_ACCOUNT="finance-development"
 PRODUCTION_SERVICE_ACCOUNT="finance-production"
 CLOUD_RUN_REGION="europe-west1"
-ARTIFACT_REGION="europe-west3"
+ARTIFACT_REGION="europe-west1"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
 TAG=$(git rev-parse --short HEAD)
@@ -17,7 +18,7 @@ if [ -z "$1" ]; then
 fi
 
 push_image() {
-    REPO="$ARTIFACT_REGION-$REGISTRY/$1/$APP"
+    REPO="$ARTIFACT_REGION-$REGISTRY/$1/$REPO_NAME"
     IMAGE="$REPO/$IMAGE_NAME"
     TAGGED_IMAGE="$IMAGE:$TAG"
     echo "$TAGGED_IMAGE"

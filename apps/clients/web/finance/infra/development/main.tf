@@ -21,10 +21,10 @@ module "run" {
   project_id             = var.project_id
   project_name           = var.project_name
   folder_name            = "finance"
-  repository_id          = "finance"
+  repository_id          = "docker"
   cloud_run_service_name = "finance"
   cloud_run_region       = "europe-west1"
-  artifact_region        = "europe-west3"
+  artifact_region        = "europe-west1"
   registry_url           = "docker.pkg.dev"
   image_name             = "web"
 }
