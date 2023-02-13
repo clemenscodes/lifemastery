@@ -18,8 +18,12 @@ variable "cdn_bucket" {
   default = "finance-production-cdn"
 }
 
-variable "subdomain" {
+variable "cdn_subdomain" {
   default = "static.finance"
+}
+
+variable "cloud_run_subdomain" {
+  default = "dev.finance"
 }
 
 variable "cdn_region" {

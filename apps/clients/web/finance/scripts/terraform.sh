@@ -49,7 +49,8 @@ tf() {
     fi
     rm "$TF_DIR/$PLAN"
     cleanup
-    generate_dns_entry
+    generate_cdn_dns_entry
+    generate_domain_mapping_dns_entry
 }
 
 local_plan() {
@@ -115,15 +116,24 @@ cleanup() {
     done
 }
 
-generate_dns_entry() {
+generate_cdn_dns_entry() {
     DOMAIN=$($TF output domain | tr -d '"')
     SUBDOMAIN=$($TF output subdomain | tr -d '"')
-    IP=$($TF output ip | tr -d '"')
+    VALUE=$($TF output ip | tr -d '"')
     echo "The following DNS entry needs to be added to the domain $DOMAIN, so that the CDN works"
     echo "Type:  A"
     echo "Host:  $SUBDOMAIN"
-    echo "Value: $IP"
-    exit 0
+    echo "Value: $VALUE"
+}
+
+generate_domain_mapping_dns_entry() {
+    DOMAIN=$($TF output domain | tr -d '"')
+    SUBDOMAIN=$($TF output cloud_run_subdomain | tr -d '"')
+    VALUE="ghs.googlehosted.com."
+    echo "The following DNS entry needs to be added to the (verified!) domain $DOMAIN, so that the Cloud Run domain mapping works"
+    echo "Type:  CNAME"
+    echo "Host:  $SUBDOMAIN"
+    echo "Value: $VALUE"
 }
 
 case "$1" in

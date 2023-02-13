@@ -13,3 +13,7 @@ output "subdomain" {
 output "domain" {
   value = module.finance.domain
 }
+
+output "cloud_run_subdomain" {
+  value = module.run.cloud_run_subdomain
+}

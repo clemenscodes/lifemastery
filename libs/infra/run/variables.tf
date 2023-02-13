@@ -38,6 +38,16 @@ variable "image_name" {
   type        = string
 }
 
+variable "domain" {
+  description = "The apex domain that the Cloud Run Service will have"
+  type        = string
+}
+
+variable "cloud_run_subdomain" {
+  description = "The subdomain that the Cloud Run Service will have"
+  type        = string
+}
+
 variable "cloud_run_region" {
   description = "The region in which the Cloud Run service will be created"
   type        = string
