@@ -1,9 +1,8 @@
-resource "google_storage_bucket" "state_bucket" {
+resource "google_storage_bucket" "cdn_bucket" {
   name                        = var.bucket
-  location                    = "EU"
+  location                    = "europe-west3"
   force_destroy               = false
   uniform_bucket_level_access = true
-  public_access_prevention    = "enforced"
   project                     = var.project_id
   storage_class               = "STANDARD"
   versioning {

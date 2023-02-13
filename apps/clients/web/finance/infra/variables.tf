@@ -35,6 +35,16 @@ variable "state_bucket" {
   type        = string
 }
 
+variable "isr_bucket" {
+  description = "The name of the isr bucket that will be created"
+  type        = string
+}
+
+variable "cdn_bucket" {
+  description = "The name of the cdn bucket that will be created"
+  type        = string
+}
+
 variable "project_id" {
   description = "The id of the project in which the buckets will be created"
   type        = string
