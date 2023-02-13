@@ -29,6 +29,18 @@
                 "postcssConfig": "apps/clients/web/finance/postcss.config.js"
             }
         },
+        "build-wrapper": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "NEXT_PUBLIC_PROJECT_TYPE=development nx build web-finance"
+                },
+                "production": {
+                    "command": "NEXT_PUBLIC_PROJECT_TYPE=production nx build web-finance"
+                }
+            }
+        },
         "export": {
             "dependsOn": ["build"],
             "executor": "@nrwl/next:export",
@@ -78,7 +90,7 @@
             }
         },
         "docker": {
-            "dependsOn": ["build"],
+            "dependsOn": ["build-wrapper"],
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
             "configurations": {
