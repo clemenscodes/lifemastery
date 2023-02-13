@@ -3,5 +3,6 @@
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "libs/infra/cdn",
     "projectType": "library",
+    "implicitDependencies": ["infra-compute", "infra-certificate"],
     "tags": []
 }
