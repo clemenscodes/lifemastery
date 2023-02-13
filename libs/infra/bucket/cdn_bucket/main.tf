@@ -12,3 +12,9 @@ resource "google_storage_bucket" "cdn_bucket" {
     prevent_destroy = true
   }
 }
+
+resource "google_storage_bucket_iam_binding" "bucket_read_access" {
+  bucket  = google_storage_bucket.cdn_bucket.name
+  role    = "roles/storage.objectViewer"
+  members = ["allUsers"]
+}

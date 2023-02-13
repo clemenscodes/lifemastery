@@ -20,3 +20,10 @@ module "cdn_bucket" {
   bucket     = var.bucket
   project_id = var.project_id
 }
+
+resource "google_compute_global_address" "ip_address" {
+  name         = local.ip_name
+  project      = var.project_id
+  address_type = "EXTERNAL"
+  ip_version   = "IPV4"
+}
