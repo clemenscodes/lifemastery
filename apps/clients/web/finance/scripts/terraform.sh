@@ -12,6 +12,7 @@ REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
 PURPLE="\\033[0;35m"
 SET="\\033[0m\\n"
+IMAGE_COUNT_THRESHOLD=1
 
 export TF_IN_AUTOMATION=true
 
@@ -53,6 +54,7 @@ tf() {
         remote_plan
     fi
     rm "$TF_DIR/$PLAN"
+    cleanup
 }
 
 local_plan() {
@@ -96,12 +98,27 @@ run_tf_command() {
 }
 
 push_image() {
-    echo "Pushing image $TAGGED_IMAGE to Cloud Run"
+    echo "Pushing image $TAGGED_IMAGE to Artifact Registry"
     docker push "$TAGGED_IMAGE"
 }
 
 purple() {
     printf "$PURPLE%s$SET" "$1"
+}
+
+cleanup() {
+    purple "Cleaning up, image threshold: $IMAGE_COUNT_THRESHOLD"
+    IMAGES=$(gcloud artifacts docker images list "$REPO" --include-tags --sort-by=CREATE_TIME | tail -n +2)
+    echo "$IMAGES"
+    IMAGE_COUNT=$(echo "$IMAGES" | wc -l | tr -d ' ')
+    i="$IMAGE_COUNT_THRESHOLD"
+    while [ $i -lt "$IMAGE_COUNT" ]; do
+        DIGEST=$(echo "$IMAGES" | sed -n "${i}p" | awk '{print $2}')
+        purple "gcloud artifacts docker images delete $IMAGE@$DIGEST"
+        echo "" | gcloud artifacts docker images delete "$IMAGE@$DIGEST" --delete-tags || exit 1
+        i=$((i + 1))
+    done
+    exit 0
 }
 
 case "$1" in

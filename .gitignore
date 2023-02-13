@@ -13,8 +13,9 @@ tmp
 .terraform
 **/target
 .nx-container
-# **/terraform.tfstate
-# **/terraform.tfstate.backup
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/plan.tfplan
 
 # IDEs and editors
 .idea
