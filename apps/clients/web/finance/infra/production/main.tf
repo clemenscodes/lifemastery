@@ -8,14 +8,14 @@ terraform {
 }
 
 module "finance" {
-  source           = "../"
-  project_name     = var.project_name
-  project_id       = var.project_id
-  state_bucket     = var.state_bucket
-  isr_bucket       = var.isr_bucket
-  cdn_bucket       = var.cdn_bucket
-  region           = var.cdn_region
-  subdomain        = var.subdomain
+  source       = "../"
+  project_name = var.project_name
+  project_id   = var.project_id
+  state_bucket = var.state_bucket
+  isr_bucket   = var.isr_bucket
+  cdn_bucket   = var.cdn_bucket
+  cdn_region   = var.cdn_region
+  subdomain    = var.subdomain
 }
 
 module "run" {
