@@ -18,7 +18,16 @@ variable "cdn_bucket" {
   default = "finance-development-cdn"
 }
 
+variable "subdomain" {
+  default = "dev.static.finance"
+}
+
+variable "cdn_region" {
+  default = "europe-west3"
+}
+
 variable "git_commit_sha" {
   description = "The git commit which will be used as the tag for the image"
+  default     = "finance-development-cdn"
   type        = string
 }

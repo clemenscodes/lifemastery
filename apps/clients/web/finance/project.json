@@ -118,6 +118,6 @@
             }
         }
     },
-    "implicitDependencies": ["infra-run", "infra-artifact", "infra-bucket"],
+    "implicitDependencies": ["infra-run", "infra-artifact", "infra-bucket", "infra-cdn"],
     "tags": []
 }

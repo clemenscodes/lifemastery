@@ -68,21 +68,25 @@ module "state_bucket" {
   bucket     = var.state_bucket
 }
 
+module "artifact-registry-repository" {
+  source        = "../../../../../libs/infra/artifact"
+  location      = var.artifact_region
+  project       = var.project_id
+  repository_id = var.repository_id
+}
+
 module "isr_bucket" {
   source     = "../../../../../libs/infra/bucket/isr_bucket"
   project_id = var.project_id
   bucket     = var.isr_bucket
 }
 
-module "cdn_bucket" {
-  source     = "../../../../../libs/infra/bucket/cdn_bucket"
-  project_id = var.project_id
-  bucket     = var.cdn_bucket
-}
-
-module "artifact-registry-repository" {
-  source        = "../../../../../libs/infra/artifact"
-  location      = var.artifact_region
-  project       = var.project_id
-  repository_id = var.repository_id
+module "cdn" {
+  source           = "../../../../../libs/infra/cdn"
+  domain           = module.workload_identity_federation.domain
+  project_id       = var.project_id
+  bucket           = var.cdn_bucket
+  region           = var.cdn_region
+  subdomain        = var.subdomain
+  certificate_name = "${var.project_name}-certificate"
 }

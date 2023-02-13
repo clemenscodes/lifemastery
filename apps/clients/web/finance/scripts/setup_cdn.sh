@@ -20,8 +20,9 @@ fi
 create_cdn() {
     PROJECT_ID="$1"
     DOMAIN="$2"
-    CERTIFICATE_NAME="$APP-$3-certificate"
+    CONFIG="$3"
     SUBDOMAIN="$4"
+    CERTIFICATE_NAME="$APP-$CONFIG-certificate"
     echo "Creating cloud delivery network in project $PROJECT_ID for domain $DOMAIN"
     set_project "$PROJECT_ID"
     create_storage_bucket "$PROJECT_ID"

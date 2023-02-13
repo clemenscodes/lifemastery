@@ -55,7 +55,12 @@ variable "project_name" {
   type        = string
 }
 
-# variable "git_commit_sha" {
-#   description = "The git commit which will be used as the tag for the image"
-#   type        = string
-# }
+variable "subdomain" {
+  description = "The subdomain that will be used for the CDN"
+  type        = string
+}
+
+variable "cdn_region" {
+  description = "The region in which the CDN will be created"
+  type        = string
+}

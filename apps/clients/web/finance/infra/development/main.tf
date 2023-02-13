@@ -14,6 +14,8 @@ module "finance" {
   state_bucket = var.state_bucket
   isr_bucket   = var.isr_bucket
   cdn_bucket   = var.cdn_bucket
+  cdn_region   = var.cdn_region
+  subdomain    = var.subdomain
 }
 
 module "run" {

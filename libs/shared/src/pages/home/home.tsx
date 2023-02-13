@@ -20,8 +20,8 @@ export function HomeScreen({ rand }: HomeProps) {
             </View>
             <View className="max-w-xl">
                 <P className="text-center">
-                    Here is a basic starter to show you how you can navigate from one screen to
-                    another. This screen uses the same code on Next.js and React Native.
+                    Here is a starter to show you how you can navigate from one screen to another.
+                    This screen uses the same code on Next.js and React Native.
                 </P>
                 <P className="text-center">
                     Solito is made by{' '}
