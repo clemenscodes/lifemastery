@@ -2,6 +2,8 @@
 
 set -e
 
+export TF_IN_AUTOMATION=true
+
 APP="finance"
 REPO_NAME="docker"
 DEVELOPMENT_PROJECT="finance-development-375914"
@@ -15,8 +17,6 @@ PURPLE="\\033[0;35m"
 SET="\\033[0m\\n"
 IMAGE_COUNT_THRESHOLD=1
 
-export TF_IN_AUTOMATION=true
-
 if [ -z "$1" ]; then
     echo "No configuration (development or production) was given" && exit 1
 fi
@@ -27,15 +27,11 @@ tf() {
     TF_DIR="$APP_DIR/infra/$CONFIG"
     TF="terraform -chdir=$TF_DIR"
     BACKEND="$TF_DIR/backend.tf"
-
     SHA="$(git rev-parse --short HEAD)"
-
     REPO="$ARTIFACT_REGION-$REGISTRY/$PROJECT/$REPO_NAME"
     IMAGE="$REPO/$IMAGE_NAME"
     TAGGED_IMAGE="$IMAGE:$SHA"
-
-    BACKEND_CONFIG="-backend-config=bucket=$APP-$CONFIG-state"
-
+    BACKEND_ARG="-backend-config=bucket=$APP-$CONFIG-state"
     PLAN_ARG="-out=$PLAN"
     INPUT_ARG="-input=false"
     LOCK_ARG="-lock=false"
@@ -43,12 +39,9 @@ tf() {
     VAR_ARG="-var=git_commit_sha=$SHA"
     TARGET_ARG="-target=module.$APP"
     APPROVE_ARG="-auto-approve"
-
     DEFAULT_PLAN="$PLAN_ARG $INPUT_ARG $LOCK_TIMEOUT_ARG $LOCK_ARG $VAR_ARG"
     ARTIFACT_PLAN="$TARGET_ARG $DEFAULT_PLAN"
-
     APPLY_ARGS="$INPUT_ARG $APPROVE_ARG $LOCK_ARG $LOCK_TIMEOUT_ARG $PLAN"
-
     if grep -q "local" "$BACKEND"; then
         local_plan
     else
@@ -56,6 +49,7 @@ tf() {
     fi
     rm "$TF_DIR/$PLAN"
     cleanup
+    generate_dns_entry
 }
 
 local_plan() {
@@ -66,14 +60,14 @@ local_plan() {
     default_plan
     sed -i 's/local/gcs/g' "$BACKEND"
     echo "Migrating state"
-    echo "yes" | $TF init "$BACKEND_CONFIG"
+    echo "yes" | $TF init "$BACKEND_ARG"
 }
 
 remote_plan() {
-    $TF init "$BACKEND_CONFIG"
+    $TF init "$BACKEND_ARG"
     artifact_plan
     push_image
-    $TF init "$BACKEND_CONFIG"
+    $TF init "$BACKEND_ARG"
     default_plan
 }
 
@@ -92,9 +86,9 @@ default_plan() {
 }
 
 run_tf_command() {
-    # echo
-    # purple "$TF_COMMAND"
-    # echo
+    echo
+    purple "$TF_COMMAND"
+    echo
     eval "$TF_COMMAND"
 }
 
@@ -119,6 +113,16 @@ cleanup() {
         echo "" | gcloud artifacts docker images delete "$IMAGE@$DIGEST" --delete-tags || exit 1
         i=$((i + 1))
     done
+}
+
+generate_dns_entry() {
+    DOMAIN=$($TF output domain | tr -d '"')
+    SUBDOMAIN=$($TF output subdomain | tr -d '"')
+    IP=$($TF output ip | tr -d '"')
+    echo "The following DNS entry needs to be added to the domain $DOMAIN, so that the CDN works"
+    echo "Type:  A"
+    echo "Host:  $SUBDOMAIN"
+    echo "Value: $IP"
     exit 0
 }
 
