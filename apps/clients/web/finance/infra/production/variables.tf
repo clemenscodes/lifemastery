@@ -23,7 +23,7 @@ variable "cdn_subdomain" {
 }
 
 variable "cloud_run_subdomain" {
-  default = "dev.finance"
+  default = "finance"
 }
 
 variable "cdn_region" {

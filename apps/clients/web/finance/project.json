@@ -98,9 +98,6 @@
             "dependsOn": ["docker"],
             "command": "apps/clients/web/finance/scripts/docker.sh"
         },
-        "cdn": {
-            "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
-        },
         "deploy": {
             "command": "apps/clients/web/finance/scripts/deploy.sh"
         },
@@ -114,6 +111,19 @@
                 },
                 "production": {
                     "command": "apps/clients/web/finance/scripts/terraform.sh production"
+                }
+            }
+        },
+        "cdn": {
+            "dependsOn": ["tf"],
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh development"
+                },
+                "production": {
+                    "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh production"
                 }
             }
         }
