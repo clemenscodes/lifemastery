@@ -7,16 +7,16 @@
             "runner": "@nrwl/nx-cloud",
             "options": {
                 "cacheableOperations": [
-                    // "lint",
-                    // "build",
-                    // "export",
-                    // "test",
-                    // "e2e",
-                    // "docker",
-                    // "deploy",
-                    // "firebase",
-                    // "codegen",
-                    // "test-codegen"
+                    "lint",
+                    "build",
+                    "export",
+                    "test",
+                    "e2e",
+                    "docker",
+                    "deploy",
+                    "firebase",
+                    "codegen",
+                    "test-codegen"
                 ],
                 "accessToken": "MzkyMjlkMTItYzViNy00N2RlLTg1NTktYmY1NmYwN2Q5M2NlfHJlYWQtd3JpdGU="
             }
@@ -24,13 +24,7 @@
     },
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": [
-            "default",
-            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-            "!{projectRoot}/tsconfig.spec.json",
-            "!{projectRoot}/jest.config.[jt]s",
-            "!{projectRoot}/.eslintrc.json"
-        ],
+        "production": ["default"],
         "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
     "targetDefaults": {
