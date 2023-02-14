@@ -84,6 +84,12 @@ resource "google_project_iam_member" "storage_admin" {
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
+resource "google_project_iam_member" "org_viewer" {
+  project = var.default_project_id
+  role    = "roles/resourcemanager.organizationAdmin"
+  member  = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
 resource "google_project_iam_member" "storage_object_admin" {
   project = var.default_project_id
   role    = "roles/storage.objectAdmin"
