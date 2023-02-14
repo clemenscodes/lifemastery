@@ -34,8 +34,3 @@ variable "git_commit_sha" {
   description = "The git commit which will be used as the tag for the image"
   type        = string
 }
-
-variable "access_token" {
-  description = "The access token which will be used for authenticating terraform in a CI/CD pipeline"
-  type        = string
-}
