@@ -13,7 +13,7 @@
                     "test",
                     "e2e",
                     "docker",
-                    "tf",
+                    "deploy",
                     "firebase",
                     "codegen",
                     "test-codegen"

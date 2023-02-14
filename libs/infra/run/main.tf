@@ -64,11 +64,9 @@ resource "google_cloud_run_domain_mapping" "default" {
   location = google_cloud_run_v2_service.default.location
   project  = google_cloud_run_v2_service.default.project
   name     = "${var.cloud_run_subdomain}.${var.domain}"
-
   metadata {
     namespace = var.project_id
   }
-
   spec {
     route_name = google_cloud_run_v2_service.default.name
   }

@@ -7,7 +7,7 @@ locals {
 }
 
 module "cdn_bucket" {
-  source     = "../bucket/cdn_bucket"
+  source     = "../bucket/cdn"
   region     = var.region
   bucket     = var.bucket
   project_id = var.project_id

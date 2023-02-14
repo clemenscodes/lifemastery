@@ -63,7 +63,7 @@ resource "google_project_iam_member" "artifact_registry_admin" {
 }
 
 module "state_bucket" {
-  source     = "../../../../../libs/infra/bucket/state_bucket"
+  source     = "../../../../../libs/infra/bucket/state"
   project_id = var.project_id
   bucket     = var.state_bucket
 }
@@ -76,7 +76,7 @@ module "artifact-registry-repository" {
 }
 
 module "isr_bucket" {
-  source     = "../../../../../libs/infra/bucket/isr_bucket"
+  source     = "../../../../../libs/infra/bucket/isr"
   project_id = var.project_id
   bucket     = var.isr_bucket
 }

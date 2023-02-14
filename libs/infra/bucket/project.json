@@ -1,7 +1,0 @@
-{
-    "name": "infra-bucket",
-    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "libs/infra/bucket",
-    "projectType": "library",
-    "tags": []
-}
