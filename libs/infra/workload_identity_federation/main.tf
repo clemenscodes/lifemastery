@@ -66,12 +66,6 @@ resource "google_project_iam_member" "wif" {
   member  = local.wif_principal
 }
 
-resource "google_project_iam_member" "wif_service_account_user" {
-  project = var.default_project_id
-  role    = "roles/iam.serviceAccountUser"
-  member  = local.wif_principal
-}
-
 resource "google_project_iam_member" "wif_service_account_token_creator" {
   project = var.default_project_id
   role    = "roles/iam.serviceAccountTokenCreator"
@@ -81,12 +75,6 @@ resource "google_project_iam_member" "wif_service_account_token_creator" {
 resource "google_project_iam_member" "storage_admin" {
   project = var.default_project_id
   role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "org_viewer" {
-  project = var.default_project_id
-  role    = "roles/resourcemanager.organizationAdmin"
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 

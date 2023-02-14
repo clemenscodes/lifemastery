@@ -467,6 +467,7 @@ jobs:
               id: auth
               uses: google-github-actions/auth@v1
               with:
+                  token_format: access_token
                   workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
                   service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
@@ -554,7 +555,7 @@ jobs:
                     --output-style=stream
 
             - name: Push docker image
-              run: docker push europe-west1-docker.pkg.dev/finance-development-375914/docker/web:$NX_HEAD
+              run: docker push europe-west1-docker.pkg.dev/finance-development-375914/docker/web:$(git rev-parse --short HEAD)
 
             - name: Deploy Google Cloud PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository
