@@ -20,12 +20,6 @@ resource "google_project_iam_member" "wif" {
   member  = module.workload_identity_federation.wif_principal
 }
 
-resource "google_project_iam_member" "wif_service_account_user" {
-  project = var.project_id
-  role    = "roles/iam.serviceAccountUser"
-  member  = module.workload_identity_federation.wif_principal
-}
-
 resource "google_project_iam_member" "wif_service_account_token_creator" {
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
@@ -35,6 +29,12 @@ resource "google_project_iam_member" "wif_service_account_token_creator" {
 resource "google_project_iam_member" "storage_admin" {
   project = var.project_id
   role    = "roles/storage.admin"
+  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+}
+
+resource "google_project_iam_member" "org_admin" {
+  project = var.project_id
+  role    = "roles/resourcemanager.organizationAdmin"
   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
 }
 

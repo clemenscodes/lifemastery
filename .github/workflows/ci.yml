@@ -484,10 +484,9 @@ jobs:
               uses: docker/setup-buildx-action@v2
 
             - name: Set up Terraform
-              run: |
-                  wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-                  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-                  sudo apt update && sudo apt install terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_wrapper: false
 
             - name: Restore Node Cache
               id: node_cache
@@ -529,33 +528,30 @@ jobs:
             # - name: Install Firebase
             #   run: npm i -g firebase-tools
 
-            - name: Build Docker Images on PR (Development)
-              if: github.event.pull_request.head.repo.full_name == github.repository
-              run: |
-                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-                  npx nx affected \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --target=docker \
-                      --no-dte \
-                      --skip-nx-cache \
-                      --output-style=stream
+            # - name: Build Docker Images on PR (Development)
+            #   if: github.event.pull_request.head.repo.full_name == github.repository
+            #   run: |
+            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            #       npx nx affected \
+            #           --base=$NX_BASE \
+            #           --head=$NX_HEAD \
+            #           --target=docker \
+            #           --no-dte \
+            #           --skip-nx-cache \
+            #           --output-style=stream
 
-            - name: Build Docker Images on Main (Production)
-              if: github.event_name != 'pull_request' && github.ref_name == 'main'
-              run: |
-                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-                  npx nx affected \
-                    --base=$NX_BASE \
-                    --head=$NX_HEAD \
-                    --target=docker \
-                    --no-dte \
-                    --configuration=production \
-                    --skip-nx-cache \
-                    --output-style=stream
-
-            - name: Push docker image
-              run: docker push europe-west1-docker.pkg.dev/finance-development-375914/docker/web:$(git rev-parse --short HEAD)
+            # - name: Build Docker Images on Main (Production)
+            #   if: github.event_name != 'pull_request' && github.ref_name == 'main'
+            #   run: |
+            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            #       npx nx affected \
+            #         --base=$NX_BASE \
+            #         --head=$NX_HEAD \
+            #         --target=docker \
+            #         --no-dte \
+            #         --configuration=production \
+            #         --skip-nx-cache \
+            #         --output-style=stream
 
             - name: Deploy Google Cloud PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository

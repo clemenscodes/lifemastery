@@ -120,7 +120,6 @@ resource "google_project_iam_member" "artifact_registry_admin" {
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
-
 data "github_repository" "repo" {
   full_name = "${var.repo_owner}/${var.repo}"
 }
