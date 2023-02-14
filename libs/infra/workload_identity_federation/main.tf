@@ -64,14 +64,6 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   timeouts {}
 }
 
-# resource "google_service_account_iam_binding" "gh_actions_policy" {
-#   service_account_id = google_service_account.gh_actions.name
-#   role               = "roles/iam.workloadIdentityUser"
-#   members = [
-#     local.wif_principal
-#   ]
-# }
-
 resource "google_project_iam_member" "wif" {
   project = var.default_project_id
   role    = "roles/iam.workloadIdentityUser"
