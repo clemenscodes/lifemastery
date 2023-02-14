@@ -1,3 +1,7 @@
+locals {
+  wif_principal = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.pool.name}/attribute.repository/${data.github_repository.repo.full_name}"
+}
+
 data "google_organization" "org" {
   domain = var.domain
 }
@@ -52,7 +56,7 @@ resource "google_service_account_iam_binding" "gh_actions_policy" {
   service_account_id = google_service_account.gh_actions.name
   role               = "roles/iam.workloadIdentityUser"
   members = [
-    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.pool.name}/attribute.repository/${data.github_repository.repo.full_name}"
+    local.wif_principal
   ]
 }
 

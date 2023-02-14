@@ -14,6 +14,24 @@ resource "google_project" "default" {
   folder_id       = google_folder.default.folder_id
 }
 
+resource "google_project_iam_member" "wif" {
+  project = var.project_id
+  role    = "roles/iam.workloadIdentityUser"
+  member  = module.workload_identity_federation.wif_principal
+}
+
+resource "google_project_iam_member" "wif_service_account_user" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = module.workload_identity_federation.wif_principal
+}
+
+resource "google_project_iam_member" "wif_service_account_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = module.workload_identity_federation.wif_principal
+}
+
 resource "google_project_iam_member" "storage_admin" {
   project = var.project_id
   role    = "roles/storage.admin"

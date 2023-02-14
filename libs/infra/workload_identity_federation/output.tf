@@ -13,3 +13,7 @@ output "service_account_email" {
 output "provider" {
   value = google_iam_workload_identity_pool_provider.github.name
 }
+
+output "wif_principal" {
+  value = local.wif_principal
+}
