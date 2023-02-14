@@ -54,6 +54,7 @@ deploy() {
     upload_assets_to_cdn "$PROJECT"
     generate_cdn_dns_entry
     generate_domain_mapping_dns_entry
+    display_wif_instructions
 }
 
 local_plan() {
@@ -165,6 +166,14 @@ generate_domain_mapping_dns_entry() {
     echo "Type:  CNAME"
     echo "Host:  $SUBDOMAIN"
     echo "Value: $VALUE"
+}
+
+display_wif_instructions() {
+    SERVICE_ACCOUNT=$($TF output service_account_email | tr -d '"')
+    PROVIDER=$($TF output provider | tr -d '"')
+    echo "The following secrets need to be added to the repository, so that the workload identity federation works"
+    echo "SERVICE_ACCOUNT:  $SERVICE_ACCOUNT"
+    echo "WORKLOAD_IDENTITY_PROVIDER: $PROVIDER"
 }
 
 case "$1" in

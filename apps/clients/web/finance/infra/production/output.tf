@@ -17,3 +17,11 @@ output "domain" {
 output "cloud_run_subdomain" {
   value = module.run.cloud_run_subdomain
 }
+
+output "service_account_email" {
+  value = module.finance.service_account_email
+}
+
+output "provider" {
+  value = module.finance.provider
+}

@@ -6,6 +6,10 @@ output "service_account_email" {
   value = module.workload_identity_federation.service_account_email
 }
 
+output "provider" {
+  value = module.workload_identity_federation.provider
+}
+
 output "ip" {
   value = module.cdn.ip
 }

@@ -9,3 +9,7 @@ output "domain" {
 output "service_account_email" {
   value = google_service_account.gh_actions.email
 }
+
+output "provider" {
+  value = google_iam_workload_identity_pool_provider.github.name
+}
