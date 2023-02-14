@@ -1,5 +1,5 @@
 locals {
-  wif_principal = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.pool.name}/attribute.repository/${data.github_repository.repo.full_name}"
+  wif_principal = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.pool.name}/attribute.repository/${var.repo_owner}/${var.repo}"
 }
 
 data "google_organization" "org" {
@@ -130,8 +130,4 @@ resource "google_project_iam_member" "artifact_registry_admin" {
   project = var.default_project_id
   role    = "roles/artifactregistry.admin"
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-data "github_repository" "repo" {
-  full_name = "${var.repo_owner}/${var.repo}"
 }
