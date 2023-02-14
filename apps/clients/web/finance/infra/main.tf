@@ -74,6 +74,12 @@ resource "google_project_iam_member" "artifact_registry_admin" {
   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
 }
 
+resource "google_project_iam_member" "compute_admin" {
+  project = var.project_id
+  role    = "roles/compute.admin"
+  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+}
+
 # resource "google_project_iam_member" "ssl_certificate_get" {
 #   project = var.project_id
 #   role    = "roles/compute.sslCertificates.get"
