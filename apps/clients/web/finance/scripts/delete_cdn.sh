@@ -38,7 +38,7 @@ set_project() {
 
 delete_storage_bucket() {
     echo "Deleting storage bucket in project $1 and region $REGION with name $BUCKET_NAME"
-    gsutil rb gs://"$BUCKET_NAME"
+    gsutil -m rm -r gs://"$BUCKET_NAME"
 }
 
 delete_external_static_ipv4() {

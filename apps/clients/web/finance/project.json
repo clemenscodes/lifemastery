@@ -114,7 +114,6 @@
             "command": "apps/clients/web/finance/scripts/deploy.sh"
         },
         "tf": {
-            "dependsOn": ["docker"],
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
             "configurations": {
