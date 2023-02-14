@@ -6,6 +6,10 @@ variable "repository_id" {
   default = "docker"
 }
 
+variable "org_name" {
+  default = "lifemastery.tech"
+}
+
 variable "cloud_run_region" {
   default = "europe-west1"
 }

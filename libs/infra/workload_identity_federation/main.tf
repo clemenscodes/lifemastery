@@ -6,6 +6,12 @@ data "google_organization" "org" {
   domain = var.domain
 }
 
+resource "google_organization_iam_member" "organization_viewer" {
+  org_id = data.google_organization.org.org_id
+  role   = "roles/resourcemanager.organizationViewer"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
 resource "google_folder" "default" {
   display_name = var.default_folder_name
   parent       = data.google_organization.org.name

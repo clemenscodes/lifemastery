@@ -32,12 +32,6 @@ resource "google_project_iam_member" "storage_admin" {
   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
 }
 
-resource "google_project_iam_member" "org_admin" {
-  project = var.project_id
-  role    = "roles/resourcemanager.organizationAdmin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-}
-
 resource "google_project_iam_member" "storage_object_admin" {
   project = var.project_id
   role    = "roles/storage.objectAdmin"
