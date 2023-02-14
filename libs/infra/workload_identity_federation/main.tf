@@ -90,18 +90,6 @@ resource "google_project_iam_member" "wif_service_account_user" {
   member  = local.wif_principal
 }
 
-resource "google_project_iam_member" "storage_admin" {
-  project = var.default_project_id
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "storage_object_admin" {
-  project = var.default_project_id
-  role    = "roles/storage.objectAdmin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
 resource "google_project_iam_member" "iam_service_account_user" {
   project = var.default_project_id
   role    = "roles/iam.serviceAccountUser"
@@ -111,29 +99,5 @@ resource "google_project_iam_member" "iam_service_account_user" {
 resource "google_project_iam_member" "iam_service_account_token_creator" {
   project = var.default_project_id
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "run_service_agent" {
-  project = var.default_project_id
-  role    = "roles/run.serviceAgent"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "run_admin" {
-  project = var.default_project_id
-  role    = "roles/run.admin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "artifact_registry_service_agent" {
-  project = var.default_project_id
-  role    = "roles/artifactregistry.serviceAgent"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "artifact_registry_admin" {
-  project = var.default_project_id
-  role    = "roles/artifactregistry.admin"
   member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }

@@ -499,17 +499,17 @@ jobs:
                   key: ubuntu-latest-node-${{ hashFiles('yarn.lock') }}
                   restore-keys: ubuntu-latest-node-
 
-            # - name: Restore Rust Cache
-            #   uses: actions/cache/restore@v3
-            #   with:
-            #       path: |
-            #           ~/.cargo/bin/
-            #           ~/.cargo/registry/index/
-            #           ~/.cargo/registry/cache/
-            #           ~/.cargo/git/db/
-            #           target/
-            #       key: ubuntu-latest-cargo-${{ hashFiles('Cargo.lock') }}
-            #       restore-keys: ubuntu-latest-cargo
+            - name: Restore Rust Cache
+              uses: actions/cache/restore@v3
+              with:
+                  path: |
+                      ~/.cargo/bin/
+                      ~/.cargo/registry/index/
+                      ~/.cargo/registry/cache/
+                      ~/.cargo/git/db/
+                      target/
+                  key: ubuntu-latest-cargo-${{ hashFiles('Cargo.lock') }}
+                  restore-keys: ubuntu-latest-cargo
 
             - name: Install Node
               uses: actions/setup-node@v3
@@ -525,33 +525,33 @@ jobs:
               if: steps.node_cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
-            # - name: Install Firebase
-            #   run: npm i -g firebase-tools
+            - name: Install Firebase
+              run: npm i -g firebase-tools
 
-            # - name: Build Docker Images on PR (Development)
-            #   if: github.event.pull_request.head.repo.full_name == github.repository
-            #   run: |
-            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            #       npx nx affected \
-            #           --base=$NX_BASE \
-            #           --head=$NX_HEAD \
-            #           --target=docker \
-            #           --no-dte \
-            #           --skip-nx-cache \
-            #           --output-style=stream
+            - name: Build Docker Images on PR (Development)
+              if: github.event.pull_request.head.repo.full_name == github.repository
+              run: |
+                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+                  npx nx affected \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --target=docker \
+                      --no-dte \
+                      --skip-nx-cache \
+                      --output-style=stream
 
-            # - name: Build Docker Images on Main (Production)
-            #   if: github.event_name != 'pull_request' && github.ref_name == 'main'
-            #   run: |
-            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            #       npx nx affected \
-            #         --base=$NX_BASE \
-            #         --head=$NX_HEAD \
-            #         --target=docker \
-            #         --no-dte \
-            #         --configuration=production \
-            #         --skip-nx-cache \
-            #         --output-style=stream
+            - name: Build Docker Images on Main (Production)
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
+              run: |
+                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+                  npx nx affected \
+                    --base=$NX_BASE \
+                    --head=$NX_HEAD \
+                    --target=docker \
+                    --no-dte \
+                    --configuration=production \
+                    --skip-nx-cache \
+                    --output-style=stream
 
             - name: Deploy Google Cloud PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository
