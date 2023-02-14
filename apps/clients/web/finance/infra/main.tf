@@ -80,60 +80,6 @@ resource "google_project_iam_member" "compute_admin" {
   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
 }
 
-# resource "google_project_iam_member" "ssl_certificate_get" {
-#   project = var.project_id
-#   role    = "roles/compute.sslCertificates.get"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "ssl_certificate_create" {
-#   project = var.project_id
-#   role    = "roles/compute.sslCertificates.create"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "ssl_certificate_update" {
-#   project = var.project_id
-#   role    = "roles/compute.sslCertificates.update"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "ip_get" {
-#   project = var.project_id
-#   role    = "roles/compute.globalAddresses.get"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "ip_create" {
-#   project = var.project_id
-#   role    = "roles/compute.globalAddresses.create"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "ip_update" {
-#   project = var.project_id
-#   role    = "roles/compute.globalAddresses.update"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "backend_buckets_update" {
-#   project = var.project_id
-#   role    = "roles/compute.backendBuckets.update"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "backend_buckets_create" {
-#   project = var.project_id
-#   role    = "roles/compute.backendBuckets.create"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
-# resource "google_project_iam_member" "backend_buckets_get" {
-#   project = var.project_id
-#   role    = "roles/compute.backendBuckets.get"
-#   member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
-# }
-
 module "state_bucket" {
   source     = "../../../../../libs/infra/bucket/state"
   project_id = var.project_id
