@@ -3,6 +3,7 @@ resource "google_compute_managed_ssl_certificate" "default" {
   project = var.project_id
   lifecycle {
     create_before_destroy = true
+    prevent_destroy       = false
   }
   managed {
     domains = [var.domain]

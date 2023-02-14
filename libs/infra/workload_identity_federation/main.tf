@@ -6,15 +6,15 @@ data "google_organization" "org" {
   domain = var.domain
 }
 
-resource "google_organization_iam_member" "folder_creator" {
+resource "google_organization_iam_member" "organization_admin" {
   org_id = data.google_organization.org.org_id
-  role   = "roles/resourcemanager.folderCreator"
+  role   = "roles/resourcemanager.organizationAdmin"
   member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
-resource "google_organization_iam_member" "project_creator" {
+resource "google_organization_iam_member" "workload_identity_pool_admin" {
   org_id = data.google_organization.org.org_id
-  role   = "roles/resourcemanager.projectCreator"
+  role   = "roles/iam.workloadIdentityPoolAdmin"
   member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
@@ -64,13 +64,13 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   timeouts {}
 }
 
-resource "google_service_account_iam_binding" "gh_actions_policy" {
-  service_account_id = google_service_account.gh_actions.name
-  role               = "roles/iam.workloadIdentityUser"
-  members = [
-    local.wif_principal
-  ]
-}
+# resource "google_service_account_iam_binding" "gh_actions_policy" {
+#   service_account_id = google_service_account.gh_actions.name
+#   role               = "roles/iam.workloadIdentityUser"
+#   members = [
+#     local.wif_principal
+#   ]
+# }
 
 resource "google_project_iam_member" "wif" {
   project = var.default_project_id
@@ -81,6 +81,12 @@ resource "google_project_iam_member" "wif" {
 resource "google_project_iam_member" "wif_service_account_token_creator" {
   project = var.default_project_id
   role    = "roles/iam.serviceAccountTokenCreator"
+  member  = local.wif_principal
+}
+
+resource "google_project_iam_member" "wif_service_account_user" {
+  project = var.default_project_id
+  role    = "roles/iam.serviceAccountUser"
   member  = local.wif_principal
 }
 
