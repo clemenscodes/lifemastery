@@ -1,5 +1,5 @@
 output "ip" {
-  value = google_compute_global_address.default.address
+  value = module.external_ip.ip
 }
 
 output "subdomain" {

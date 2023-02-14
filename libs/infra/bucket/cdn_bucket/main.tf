@@ -8,9 +8,6 @@ resource "google_storage_bucket" "cdn_bucket" {
   versioning {
     enabled = true
   }
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "google_storage_bucket_iam_binding" "bucket_read_access" {

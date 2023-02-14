@@ -1,7 +1,0 @@
-{
-    "name": "infra-certificate",
-    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "libs/infra/certificate",
-    "projectType": "library",
-    "tags": []
-}
