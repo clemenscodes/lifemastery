@@ -528,30 +528,33 @@ jobs:
             # - name: Install Firebase
             #   run: npm i -g firebase-tools
 
-            # - name: Build Docker Images on PR (Development)
-            #   if: github.event.pull_request.head.repo.full_name == github.repository
-            #   run: |
-            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            #       npx nx affected \
-            #           --base=$NX_BASE \
-            #           --head=$NX_HEAD \
-            #           --target=docker \
-            #           --no-dte \
-            #           --skip-nx-cache \
-            #           --output-style=stream
+            - name: Build Docker Images on PR (Development)
+              if: github.event.pull_request.head.repo.full_name == github.repository
+              run: |
+                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+                  npx nx affected \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --target=docker \
+                      --no-dte \
+                      --skip-nx-cache \
+                      --output-style=stream
 
-            # - name: Build Docker Images on Main (Production)
-            #   if: github.event_name != 'pull_request' && github.ref_name == 'main'
-            #   run: |
-            #       INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            #       npx nx affected \
-            #         --base=$NX_BASE \
-            #         --head=$NX_HEAD \
-            #         --target=docker \
-            #         --no-dte \
-            #         --configuration=production \
-            #         --skip-nx-cache \
-            #         --output-style=stream
+            - name: Build Docker Images on Main (Production)
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
+              run: |
+                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+                  npx nx affected \
+                    --base=$NX_BASE \
+                    --head=$NX_HEAD \
+                    --target=docker \
+                    --no-dte \
+                    --configuration=production \
+                    --skip-nx-cache \
+                    --output-style=stream
+
+            - name: Push docker image
+              run: docker push europe-west1-docker.pkg.dev/finance-development-375914/docker/web:$NX_HEAD
 
             - name: Deploy Google Cloud PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository
