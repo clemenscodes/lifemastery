@@ -1,10 +1,6 @@
-module "workload_identity_federation" {
-  source = "../../../../../libs/infra/workload_identity_federation"
-}
-
 resource "google_folder" "default" {
   display_name = var.folder_name
-  parent       = module.workload_identity_federation.org_name
+  parent       = var.org_name
 }
 
 resource "google_project" "default" {

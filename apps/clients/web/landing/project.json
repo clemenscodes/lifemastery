@@ -53,6 +53,18 @@
         },
         "firebase": {
             "command": "apps/clients/web/landing/firebase.sh"
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "apps/clients/web/landing/scripts/deploy.sh development"
+                },
+                "production": {
+                    "command": "apps/clients/web/landing/scripts/deploy.sh production"
+                }
+            }
         }
     },
     "tags": []
