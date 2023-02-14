@@ -94,9 +94,6 @@ jobs:
                   npx nx-cloud record -- npx nx format:check --libs-and-apps --no-dte
                   cargo fmt --all --check
 
-            - name: Lint Workspace
-              run: npx nx-cloud record -- npx nx workspace-lint --no-dte
-
             - name: Start Agents
               if: needs.agents.result != 'failure' && needs.agents.result != 'cancelled' && needs.agents.result != 'skipped'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e

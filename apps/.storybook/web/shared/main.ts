@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     core: { ...rootMain.core, builder: 'webpack5' },
     stories: [...rootMain.stories, '../../../../libs/shared/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
     addons: [
+        '@storybook/addon-essentials',
         ...(rootMain.addons || []),
         '@nrwl/react/plugins/storybook',
         'storybook-addon-swc',
