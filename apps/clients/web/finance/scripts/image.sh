@@ -13,7 +13,7 @@ image() {
             echo "Missing GitHub token file"
             exit 1
         fi
-        INPUT_GITHUB_TOKEN=$(cat "$GH_TOKEN_FILE") $(git rev-parse --short HEAD) nx image web-finance --configuration="$CONFIG"
+        INPUT_GITHUB_TOKEN=$(cat "$GH_TOKEN_FILE") INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --configuration="$CONFIG"
     fi
 }
 
