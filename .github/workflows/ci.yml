@@ -525,6 +525,12 @@ jobs:
             - name: Install Firebase
               run: npm i -g firebase-tools
 
+            - name: Download Exported Web Apps
+              uses: actions/download-artifact@v3
+              with:
+                  name: exported
+                  path: dist/apps/clients/web
+
             - name: Build Docker Images on PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository
               run: |
@@ -573,12 +579,6 @@ jobs:
                       --skip-nx-cache \
                       --output-style=stream \
                       --configuration=production
-
-            - name: Download Exported Web Apps
-              uses: actions/download-artifact@v3
-              with:
-                  name: exported
-                  path: dist/apps/clients/web
 
             - name: Deploy to Firebase Hosting on PR (Development)
               if: github.event.pull_request.head.repo.full_name == github.repository

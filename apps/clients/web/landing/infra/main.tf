@@ -59,6 +59,12 @@ resource "google_project_iam_member" "firebasehosting_admin" {
   member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
+resource "google_project_iam_member" "firebase_admin_sdk_service_agent" {
+  project = var.project_id
+  role    = "roles/firebase.sdkAdminServiceAgent"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
+}
+
 module "state_bucket" {
   source     = "../../../../../libs/infra/bucket/state"
   project_id = var.project_id
