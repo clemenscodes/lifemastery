@@ -8,18 +8,6 @@ module "state_bucket" {
   bucket     = module.data.bucket
 }
 
-resource "google_organization_iam_member" "organization_admin" {
-  org_id = module.data.org_id
-  role   = "roles/resourcemanager.organizationAdmin"
-  member = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_organization_iam_member" "workload_identity_pool_admin" {
-  org_id = module.data.org_id
-  role   = "roles/iam.workloadIdentityPoolAdmin"
-  member = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
 resource "google_folder" "default" {
   display_name = module.data.folder_name
   parent       = module.data.org_name
@@ -32,9 +20,15 @@ resource "google_project" "default" {
   folder_id       = google_folder.default.name
 }
 
+resource "google_project_service" "iam_credentials" {
+  project = module.data.project_id
+  service = "iamcredentials.googleapis.com"
+}
+
 resource "google_service_account" "gh_actions" {
   account_id = module.data.workload_identity_service_account_id
   project    = google_project.default.project_id
+  depends_on = [google_project_service.iam_credentials]
 }
 
 resource "google_iam_workload_identity_pool" "pool" {
@@ -61,6 +55,18 @@ resource "google_iam_workload_identity_pool_provider" "github" {
     issuer_uri        = "https://token.actions.githubusercontent.com"
   }
   timeouts {}
+}
+
+resource "google_project_iam_member" "organization_admin" {
+  project = module.data.project_id
+  role   = "roles/resourcemanager.organizationAdmin"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
+resource "google_project_iam_member" "workload_identity_pool_admin" {
+  project = module.data.project_id
+  role   = "roles/iam.workloadIdentityPoolAdmin"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
 resource "google_project_iam_member" "wif" {

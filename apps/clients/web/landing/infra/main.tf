@@ -47,6 +47,12 @@ resource "google_project_iam_member" "iam_service_account_token_creator" {
   member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
+resource "google_project_iam_member" "firebasehosting_admin" {
+  project = var.project_id
+  role    = "roles/firebasehosting.admin"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
+}
+
 module "state_bucket" {
   source     = "../../../../../libs/infra/bucket/state"
   project_id = var.project_id
