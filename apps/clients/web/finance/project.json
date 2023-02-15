@@ -107,6 +107,7 @@
             "command": "apps/clients/web/finance/scripts/docker.sh"
         },
         "deploy": {
+            "dependsOn": ["docker"],
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
             "configurations": {
