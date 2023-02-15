@@ -5,7 +5,6 @@
     "sourceRoot": "apps/src-tauri/finance/src",
     "targets": {
         "build": {
-            "inputs": ["desktopExported"],
             "dependsOn": ["^export"],
             "executor": "@ignisda/nx-rust:build",
             "defaultConfiguration": "production",
@@ -22,7 +21,6 @@
             }
         },
         "test": {
-            "inputs": ["desktopExported"],
             "dependsOn": ["^export"],
             "executor": "@ignisda/nx-rust:test",
             "defaultConfiguration": "production",
@@ -39,7 +37,6 @@
             }
         },
         "lint": {
-            "inputs": ["desktopExported"],
             "dependsOn": ["^export"],
             "executor": "@ignisda/nx-rust:clippy",
             "options": {
@@ -49,7 +46,6 @@
             }
         },
         "start": {
-            "inputs": ["desktopExported"],
             "dependsOn": ["^export"],
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",

@@ -18,7 +18,7 @@ RUN set -e; \
     && curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz \
     && mkdir -p /usr/local/gcloud \
     && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz \
-    && /usr/local/gcloud/google-cloud-sdk/install.sh --override-components gsutil \
+    && /usr/local/gcloud/google-cloud-sdk/install.sh --override-components gsutil >/dev/null 2>&1 \
     && apk del --purge apk-tools \
     && rm -rf /var/cache/apk/*
 

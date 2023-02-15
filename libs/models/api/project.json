@@ -1,0 +1,7 @@
+{
+    "name": "models-api",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/models/api",
+    "projectType": "library",
+    "tags": []
+}

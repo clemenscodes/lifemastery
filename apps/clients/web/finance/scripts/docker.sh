@@ -1,13 +1,15 @@
 #!/bin/sh
+
 set -e
-APP="finance"
+
+REPO_NAME="docker"
 APP_HOME="/app"
 CONTAINER_CREDENTIALS_PATH="$APP_HOME/credentials.json"
 DEVELOPMENT_PROJECT="finance-development-375914"
 PRODUCTION_PROJECT="finance-production-375914"
 SERVICE_ACCOUNT="lifemastery@landing-production-375914.iam.gserviceaccount.com"
 HOST_CREDENTIALS_PATH="$HOME/.config/gcloud/landing-production-375914-153e51456a41.json"
-ARTIFACT_REGION="europe-west3"
+ARTIFACT_REGION="europe-west1"
 REGISTRY="docker.pkg.dev"
 IMAGE_NAME="web"
 TAG=$(git rev-parse --short HEAD)
@@ -17,7 +19,7 @@ if [ -z "$1" ]; then
 fi
 
 run() {
-    REPO="$ARTIFACT_REGION-$REGISTRY/$1/$APP"
+    REPO="$ARTIFACT_REGION-$REGISTRY/$1/$REPO_NAME"
     IMAGE="$REPO/$IMAGE_NAME"
     docker run \
         --device /dev/fuse \
@@ -31,7 +33,7 @@ run() {
 }
 
 case "$1" in
-    development) run "$DEVELOPMENT_PROJECT" ;;
-    production) run "$PRODUCTION_PROJECT" ;;
-    *) echo "Invalid configuration: $1" && exit 1 ;;
+development) run "$DEVELOPMENT_PROJECT" ;;
+production) run "$PRODUCTION_PROJECT" ;;
+*) echo "Invalid configuration: $1" && exit 1 ;;
 esac

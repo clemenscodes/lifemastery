@@ -62,7 +62,7 @@
                 "development": {
                     "metadata": {
                         "images": [
-                            "europe-west3-docker.pkg.dev/finance-development-375914/finance/web"
+                            "europe-west1-docker.pkg.dev/finance-development-375914/docker/web"
                         ],
                         "tags": ["type=schedule", "type=sha"]
                     }
@@ -70,7 +70,7 @@
                 "production": {
                     "metadata": {
                         "images": [
-                            "europe-west3-docker.pkg.dev/finance-production-375914/finance/web"
+                            "europe-west1-docker.pkg.dev/finance-production-375914/docker/web"
                         ],
                         "tags": ["type=schedule", "type=sha"]
                     }
@@ -82,30 +82,38 @@
             "defaultConfiguration": "development",
             "configurations": {
                 "development": {
-                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte"
+                    "command": "apps/clients/web/finance/scripts/image.sh development"
                 },
                 "production": {
-                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte --configuration=production"
+                    "command": "apps/clients/web/finance/scripts/image.sh production"
                 }
             }
-        },
-        "standalone": {
-            "dependsOn": ["build"],
-            "command": "./apps/clients/web/finance/scripts/standalone.sh"
         },
         "run-docker": {
             "dependsOn": ["docker"],
             "command": "apps/clients/web/finance/scripts/docker.sh"
         },
-        "kubernetes": {
-            "command": "apps/clients/web/finance/scripts/kubernetes.sh"
-        },
         "deploy": {
-            "command": "apps/clients/web/finance/scripts/deploy.sh"
-        },
-        "cdn": {
-            "command": "apps/clients/web/finance/scripts/upload_assets_to_cdn.sh"
+            "dependsOn": ["docker"],
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "apps/clients/web/finance/scripts/deploy.sh development"
+                },
+                "production": {
+                    "command": "apps/clients/web/finance/scripts/deploy.sh production"
+                }
+            }
         }
     },
+    "implicitDependencies": [
+        "infra-run",
+        "infra-wif",
+        "infra-artifact",
+        "infra-bucket-cdn",
+        "infra-bucket-state",
+        "infra-bucket-isr"
+    ],
     "tags": []
 }

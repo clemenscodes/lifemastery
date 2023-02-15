@@ -4,7 +4,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Err(error) => return Err(Box::new(error)),
     };
     let models_dir = current_dir
-        .join("../../../../tools/models")
+        .join("../../../../libs/models/api")
         .canonicalize()?;
     let api_proto_path = models_dir.join("api.proto");
     let out_dir = current_dir.join("src");

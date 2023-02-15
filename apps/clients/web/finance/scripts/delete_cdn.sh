@@ -38,7 +38,7 @@ set_project() {
 
 delete_storage_bucket() {
     echo "Deleting storage bucket in project $1 and region $REGION with name $BUCKET_NAME"
-    gsutil rb gs://"$BUCKET_NAME"
+    gsutil -m rm -r gs://"$BUCKET_NAME"
 }
 
 delete_external_static_ipv4() {
@@ -77,7 +77,7 @@ delete_global_backend_bucket() {
 }
 
 case "$1" in
-    development) delete_cdn "$DEVELOPMENT_PROJECT" "$DEV.$APEX" "$1" ;;
-    production) delete_cdn "$PRODUCTION_PROJECT" "$PROD.$APEX" "$1" ;;
-    *) echo "Invalid configuration: $1" && exit 1 ;;
+development) delete_cdn "$DEVELOPMENT_PROJECT" "$DEV.$APEX" "$1" ;;
+production) delete_cdn "$PRODUCTION_PROJECT" "$PROD.$APEX" "$1" ;;
+*) echo "Invalid configuration: $1" && exit 1 ;;
 esac

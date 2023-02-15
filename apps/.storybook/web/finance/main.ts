@@ -9,6 +9,7 @@ const config: StorybookConfig = {
         '../../../clients/web/finance/stories/**/*.stories.?(ts|tsx|js|jsx)',
     ],
     addons: [
+        '@storybook/addon-essentials',
         ...(rootMain.addons || []),
         '@nrwl/react/plugins/storybook',
         'storybook-addon-swc',

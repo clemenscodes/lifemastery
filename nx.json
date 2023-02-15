@@ -13,6 +13,7 @@
                     "test",
                     "e2e",
                     "docker",
+                    "deploy",
                     "firebase",
                     "codegen",
                     "test-codegen"
@@ -23,16 +24,8 @@
     },
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": [
-            "default",
-            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-            "!{projectRoot}/tsconfig.spec.json",
-            "!{projectRoot}/jest.config.[jt]s",
-            "!{projectRoot}/.eslintrc.json"
-        ],
-        "sharedGlobals": ["{workspaceRoot}/babel.config.json"],
-        "desktopExported": ["{workspaceRoot}/dist/apps/clients/web/**/exported"],
-        "grpcModels": ["{workspaceRoot}/tools/models/**/*.proto"]
+        "production": ["default"],
+        "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
     },
     "targetDefaults": {
         "build": {
