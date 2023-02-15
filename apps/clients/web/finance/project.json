@@ -78,7 +78,6 @@
             }
         },
         "docker": {
-            "dependsOn": ["build-wrapper"],
             "executor": "nx:run-commands",
             "defaultConfiguration": "development",
             "configurations": {
