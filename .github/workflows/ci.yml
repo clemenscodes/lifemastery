@@ -497,7 +497,7 @@ jobs:
               run: yarn install --immutable
 
             - name: Start Agents
-              run: npx nx-cloud start-ci-run --stop-agents-after=firebase
+              run: npx nx-cloud start-ci-run --stop-agents-after=deploy
 
             - name: Run Agents (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
@@ -505,6 +505,8 @@ jobs:
               with:
                   cmd1: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC docker
                   cmd2: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC deploy
+              env:
+                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Run Agents (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
@@ -512,6 +514,8 @@ jobs:
               with:
                   cmd1: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC docker --configuration=production
                   cmd2: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC deploy --configuration=production
+              env:
+                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Stop Agents
               if: always()
