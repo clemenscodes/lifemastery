@@ -1,11 +1,11 @@
 variable "project_name" {
-  default = "finance-development"
+  default = "landing-development"
 }
 
 variable "project_id" {
-  default = "finance-development-375914"
+  default = "landing-development"
 }
 
 variable "state_bucket" {
-  default = "finance-development-state"
+  default = "landing-development-state"
 }

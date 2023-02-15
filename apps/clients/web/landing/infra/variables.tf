@@ -2,10 +2,6 @@ variable "folder_name" {
   default = "landing"
 }
 
-variable "org_name" {
-  default = "lifemastery.tech"
-}
-
 variable "billing_account" {
   default = "01D0FC-03F662-69E484"
 }

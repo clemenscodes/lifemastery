@@ -33,7 +33,6 @@ deploy() {
         remote_plan
     fi
     rm "$TF_DIR/$PLAN"
-    cleanup
 }
 
 local_plan() {
@@ -41,7 +40,7 @@ local_plan() {
     default_plan
     sed -i 's/local/gcs/g' "$BACKEND"
     echo "Migrating state"
-    echo "yes" | $TF init "$BACKEND_ARG"
+    echo "yes" | $TF init -migrate-state "$BACKEND_ARG"
 }
 
 remote_plan() {
