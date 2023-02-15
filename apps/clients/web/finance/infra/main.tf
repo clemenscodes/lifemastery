@@ -14,11 +14,6 @@ resource "google_project" "default" {
   folder_id       = google_folder.default.folder_id
 }
 
-resource "google_project_service" "iam_credentials" {
-  project = var.project_id
-  service = "iamcredentials.googleapis.com"
-}
-
 resource "google_project_iam_member" "wif" {
   project = var.project_id
   role    = "roles/iam.workloadIdentityUser"
@@ -35,6 +30,18 @@ resource "google_project_iam_member" "wif_service_account_token_creator" {
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
   member  = module.wif_data.wif_principal
+}
+
+resource "google_project_iam_member" "organization_admin" {
+  project = var.project_id
+  role   = "roles/resourcemanager.organizationAdmin"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
+}
+
+resource "google_project_iam_member" "workload_identity_pool_admin" {
+  project = var.project_id
+  role   = "roles/iam.workloadIdentityPoolAdmin"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "iam_service_account_user" {
