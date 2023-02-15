@@ -67,5 +67,6 @@
             }
         }
     },
+    "implicitDependencies": ["infra-wif", "infra-bucket-state"],
     "tags": []
 }

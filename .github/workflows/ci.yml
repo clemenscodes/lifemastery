@@ -513,17 +513,17 @@ jobs:
               with:
                   node-version: 16
 
-            - name: Install Protoc
-              uses: arduino/setup-protoc@master
-              with:
-                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+            # - name: Install Protoc
+            #   uses: arduino/setup-protoc@master
+            #   with:
+            #       repo-token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Install Node Dependencies
               if: steps.node_cache.outputs.cache-hit != 'true'
               run: yarn install --immutable
 
-            - name: Install Firebase
-              run: npm i -g firebase-tools
+            # - name: Install Firebase
+            #   run: npm i -g firebase-tools
 
             # - name: Build Docker Images on PR (Development)
             #   if: github.event.pull_request.head.repo.full_name == github.repository
