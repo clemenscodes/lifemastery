@@ -95,10 +95,10 @@
             "defaultConfiguration": "development",
             "configurations": {
                 "development": {
-                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte"
+                    "command": "apps/clients/web/finance/scripts/image.sh development"
                 },
                 "production": {
-                    "command": "INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte --configuration=production"
+                    "command": "apps/clients/web/finance/scripts/image.sh production"
                 }
             }
         },
