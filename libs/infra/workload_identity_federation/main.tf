@@ -20,16 +20,28 @@ resource "google_project" "default" {
   folder_id       = google_folder.default.name
 }
 
+resource "google_organization_iam_member" "organization_admin" {
+  org_id = module.data.org_id
+  role   = "roles/resourcemanager.organizationAdmin"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
+resource "google_organization_iam_member" "workload_identity_pool_admin" {
+  org_id = module.data.org_id
+  role   = "roles/iam.workloadIdentityPoolAdmin"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
+}
+
 resource "google_organization_iam_member" "storage_admin" {
   org_id = module.data.org_id
   role   = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
 resource "google_organization_iam_member" "storage_object_admin" {
   org_id = module.data.org_id
   role   = "roles/storage.objectAdmin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
+  member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
 resource "google_project_service" "iam_credentials" {
@@ -67,18 +79,6 @@ resource "google_iam_workload_identity_pool_provider" "github" {
     issuer_uri        = "https://token.actions.githubusercontent.com"
   }
   timeouts {}
-}
-
-resource "google_project_iam_member" "organization_admin" {
-  project = module.data.project_id
-  role    = "roles/resourcemanager.organizationAdmin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
-}
-
-resource "google_project_iam_member" "workload_identity_pool_admin" {
-  project = module.data.project_id
-  role    = "roles/iam.workloadIdentityPoolAdmin"
-  member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
 resource "google_project_iam_member" "wif" {

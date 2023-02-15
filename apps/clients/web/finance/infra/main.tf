@@ -14,6 +14,11 @@ resource "google_project" "default" {
   folder_id       = google_folder.default.folder_id
 }
 
+resource "google_project_service" "iam_credentials" {
+  project = var.project_id
+  service = "iamcredentials.googleapis.com"
+}
+
 resource "google_project_iam_member" "wif" {
   project = var.project_id
   role    = "roles/iam.workloadIdentityUser"

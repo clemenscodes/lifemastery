@@ -7,6 +7,11 @@ resource "google_folder" "default" {
   parent       = module.wif_data.org_name
 }
 
+resource "google_project_service" "iam_credentials" {
+  project = var.project_id
+  service = "iamcredentials.googleapis.com"
+}
+
 resource "google_project" "default" {
   name            = var.project_name
   project_id      = var.project_id
