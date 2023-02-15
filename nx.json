@@ -9,7 +9,6 @@
                 "cacheableOperations": [
                     "lint",
                     "build",
-                    "build-wrapper",
                     "export",
                     "test",
                     "e2e",

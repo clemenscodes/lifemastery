@@ -13,6 +13,7 @@ image() {
             echo "Missing GitHub token"
             exit 1
         fi
+        NEXT_PUBLIC_PROJECT_TYPE=$CONFIG nx build web-finance
         INPUT_GITHUB_TOKEN=$INPUT_GITHUB_TOKEN INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --configuration="$CONFIG"
     fi
 }
