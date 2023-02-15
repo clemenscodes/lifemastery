@@ -501,15 +501,15 @@ jobs:
 
             - name: Run Agents (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
-              run: echo ${{ secrets.GITHUB_TOKEN }} > gh_token.txt && cat gh_token.txt && $NX_EXEC deploy
+              run: echo ${{ secrets.GITHUB_TOKEN }} > ${{ env.TOKEN }} && $NX_EXEC deploy
               env:
-                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TOKEN: gh_token.txt
 
             - name: Run Agents (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
-              run: $NX_EXEC deploy --configuration=production
+              run: echo ${{ secrets.GITHUB_TOKEN }} > ${{ env.TOKEN }} && $NX_EXEC deploy --configuration=production
               env:
-                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TOKEN: gh_token.txt
 
             - name: Stop Agents
               if: always()
