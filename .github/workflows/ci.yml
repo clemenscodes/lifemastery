@@ -531,6 +531,7 @@ jobs:
     deploy-agents:
         name: Deploy Agent ${{ matrix.agent }}
         # needs: [main, agents, apps, release]
+        needs: [set-agents]
         runs-on: ubuntu-latest
         permissions:
             contents: 'read'
