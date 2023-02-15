@@ -18,7 +18,6 @@ env:
     NX_EXEC: 'npx nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT --target'
     CI: true
     ARTEFACT_REGISTRY_REGION: europe-west1
-    GH_TOKEN_FILE: gh_token.txt
 
 jobs:
     set-agents:
@@ -502,11 +501,11 @@ jobs:
 
             - name: Run Agents (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
-              run: echo ${{ secrets.GITHUB_TOKEN }} > ${{ env.GH_TOKEN_FILE }} && cat ${{ env.GH_TOKEN_FILE }} && $NX_EXEC deploy
+              run: $NX_EXEC deploy
 
             - name: Run Agents (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
-              run: echo ${{ secrets.GITHUB_TOKEN }} > ${{ env.GH_TOKEN_FILE }} && cat ${{ env.GH_TOKEN_FILE }} && $NX_EXEC deploy --configuration=production
+              run: $NX_EXEC deploy --configuration=production
 
             - name: Stop Agents
               if: always()
@@ -619,6 +618,8 @@ jobs:
 
             - name: Run Agent
               run: npx nx-cloud start-agent
+              env:
+                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Abort Workflow
               if: failure()
