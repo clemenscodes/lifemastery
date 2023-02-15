@@ -501,28 +501,11 @@ jobs:
 
             - name: Run Agents (development)
               if: github.event.pull_request.head.repo.full_name == github.repository
-              run: |
-                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-                  npx nx affected \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --target=docker \
-                      --skip-nx-cache \
-                      --output-style=stream &
-                  $NX_EXEC deploy &
+              run: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC deploy
 
             - name: Run Agents (production)
               if: github.event_name != 'pull_request' && github.ref_name == 'main'
-              run: |
-                  INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-                  npx nx affected \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --target=docker \
-                      --skip-nx-cache \
-                      --configuration=production \
-                      --output-style=stream &
-                  $NX_EXEC deploy --configuration=production &
+              run: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC deploy --configuration=production
 
             - name: Stop Agents
               if: always()
