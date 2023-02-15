@@ -497,26 +497,17 @@ jobs:
               run: yarn install --immutable
 
             - name: Start Agents
-              if: needs.deploy-agents.result != 'failure' &&
-                  needs.deploy-agents.result != 'cancelled' &&
-                  needs.deploy-agents.result != 'skipped'
               run: npx nx-cloud start-ci-run --stop-agents-after=firebase
 
             - name: Run Agents (development)
-              if: needs.deploy-agents.result != 'failure' &&
-                  needs.deploy-agents.result != 'cancelled' &&
-                  needs.deploy-agents.result != 'skipped' &&
-                  github.event.pull_request.head.repo.full_name == github.repository
+              if: github.event.pull_request.head.repo.full_name == github.repository
               uses: jameshenry/parallel-bash-commands@v1
               with:
                   cmd1: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC docker
                   cmd2: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC deploy
 
             - name: Run Agents (production)
-              if: needs.deploy-agents.result != 'failure' &&
-                  needs.deploy-agents.result != 'cancelled' &&
-                  needs.deploy-agents.result != 'skipped' &&
-                  github.event_name != 'pull_request' && github.ref_name == 'main'
+              if: github.event_name != 'pull_request' && github.ref_name == 'main'
               uses: jameshenry/parallel-bash-commands@v1
               with:
                   cmd1: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} $NX_EXEC docker --configuration=production
