@@ -9,11 +9,11 @@ image() {
     if [ -z "$CI" ]; then
         INPUT_TAGS=$(git rev-parse --short HEAD) nx image web-finance --no-dte --configuration="$CONFIG"
     else
-        if [ -z "$TOKEN" ]; then
+        if [ -z "$GH_TOKEN_FILE" ]; then
             echo "Missing GitHub token file"
             exit 1
         fi
-        INPUT_GITHUB_TOKEN=$(cat "$TOKEN") $(git rev-parse --short HEAD) nx image web-finance --configuration="$CONFIG"
+        INPUT_GITHUB_TOKEN=$(cat "$GH_TOKEN_FILE") $(git rev-parse --short HEAD) nx image web-finance --configuration="$CONFIG"
     fi
 }
 
