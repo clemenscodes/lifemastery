@@ -32,10 +32,10 @@ resource "google_organization_iam_member" "workload_identity_pool_admin" {
   member = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
-resource "google_organization_iam_member" "service_admin" {
+resource "google_organization_iam_member" "quota_admin" {
   org_id = module.data.org_id
-  role   = "roles/servicmanagement.quotaAdmin"
-  member = "serviceAccount:${google_service_account.gh_actions.email}"
+  role    = "roles/servicemanagement.quotaAdmin"
+  member  = "serviceAccount:${google_service_account.gh_actions.email}"
 }
 
 resource "google_organization_iam_member" "storage_admin" {
