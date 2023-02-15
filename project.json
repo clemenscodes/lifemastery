@@ -17,6 +17,18 @@
                 "baseBranch": "main",
                 "preset": "conventional"
             }
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
+            "configurations": {
+                "development": {
+                    "command": "tools/scripts/deploy.sh development"
+                },
+                "production": {
+                    "command": "tools/scripts/deploy.sh production"
+                }
+            }
         }
     }
 }

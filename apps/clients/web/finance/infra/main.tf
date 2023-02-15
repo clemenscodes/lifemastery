@@ -1,6 +1,10 @@
+module "wif_data" {
+  source = "../../../../../libs/infra/workload_identity_federation/data"
+}
+
 resource "google_folder" "default" {
   display_name = var.folder_name
-  parent       = var.org_name
+  parent       = module.wif_data.org_name
 }
 
 resource "google_project" "default" {
@@ -13,73 +17,73 @@ resource "google_project" "default" {
 resource "google_project_iam_member" "wif" {
   project = var.project_id
   role    = "roles/iam.workloadIdentityUser"
-  member  = module.workload_identity_federation.wif_principal
+  member  = module.wif_data.wif_principal
 }
 
 resource "google_project_iam_member" "wif_service_account_user" {
   project = var.project_id
   role    = "roles/iam.serviceAccountUser"
-  member  = module.workload_identity_federation.wif_principal
+  member  = module.wif_data.wif_principal
 }
 
 resource "google_project_iam_member" "wif_service_account_token_creator" {
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = module.workload_identity_federation.wif_principal
+  member  = module.wif_data.wif_principal
 }
 
 resource "google_project_iam_member" "iam_service_account_user" {
   project = var.project_id
   role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "iam_service_account_token_creator" {
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "run_service_agent" {
   project = var.project_id
   role    = "roles/run.serviceAgent"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "storage_admin" {
   project = var.project_id
   role    = "roles/storage.admin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "storage_object_admin" {
   project = var.project_id
   role    = "roles/storage.objectAdmin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "run_admin" {
   project = var.project_id
   role    = "roles/run.admin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "artifact_registry_service_agent" {
   project = var.project_id
   role    = "roles/artifactregistry.serviceAgent"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "artifact_registry_admin" {
   project = var.project_id
   role    = "roles/artifactregistry.admin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 resource "google_project_iam_member" "compute_admin" {
   project = var.project_id
   role    = "roles/compute.admin"
-  member  = "serviceAccount:${module.workload_identity_federation.service_account_email}"
+  member  = "serviceAccount:${module.wif_data.service_account_email}"
 }
 
 module "state_bucket" {
@@ -103,7 +107,7 @@ module "isr_bucket" {
 
 module "cdn" {
   source           = "../../../../../libs/infra/cdn"
-  domain           = module.workload_identity_federation.domain
+  domain           = module.wif_data.domain
   project_id       = var.project_id
   bucket           = var.cdn_bucket
   region           = var.cdn_region

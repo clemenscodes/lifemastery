@@ -1,19 +1,7 @@
-output "org_name" {
-  value = data.google_organization.org.name
-}
-
-output "domain" {
-  value = var.domain
+output "provider" {
+  value = module.data.provider
 }
 
 output "service_account_email" {
-  value = google_service_account.gh_actions.email
-}
-
-output "provider" {
-  value = google_iam_workload_identity_pool_provider.github.name
-}
-
-output "wif_principal" {
-  value = local.wif_principal
+  value = module.data.service_account_email
 }

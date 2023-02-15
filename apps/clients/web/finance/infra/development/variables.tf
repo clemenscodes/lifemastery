@@ -1,3 +1,15 @@
+variable "org_project_id" {
+  default = "org-wif-375914"
+}
+
+variable "org_project_name" {
+  default = "org-wif"
+}
+
+variable "org_folder_name" {
+  default = "org"
+}
+
 variable "project_name" {
   default = "finance-development"
 }
