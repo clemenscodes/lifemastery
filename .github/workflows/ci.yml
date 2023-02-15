@@ -541,7 +541,7 @@ jobs:
                   curl -X POST -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel
 
     deploy-agents:
-        name: Agent ${{ matrix.agent }}
+        name: Deploy Agent ${{ matrix.agent }}
         needs: [main, agents, apps, release]
         runs-on: ubuntu-latest
         defaults:
