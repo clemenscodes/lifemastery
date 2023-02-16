@@ -32,7 +32,7 @@ deploy() {
     else
         remote_plan
     fi
-    npx nx firebase web-landing "$CONFIG"
+    npx nx firebase web-landing "$CONFIG" --skip-nx-cache
     rm "$TF_DIR/$PLAN"
 }
 
